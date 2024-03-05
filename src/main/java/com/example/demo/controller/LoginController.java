@@ -48,7 +48,7 @@ public class LoginController {
      */
     @PostMapping("/register")
     public Result register(@RequestBody User user){
-        if(validate(user.getUsername()).getData().equals(true)){
+        if(getByUsername(user.getUsername()).getData()==null){
             // 用户名合法
             loginService.register(user);
             return Result.success();
@@ -61,13 +61,12 @@ public class LoginController {
      * @param username 用户名
      * @return 检验结果
      */
-    @PostMapping("/validate")
-    public Result validate(@RequestBody String username){
-        User user=loginService.validate(username);
-        if(user !=null){
-            // 用户名重复
-            return Result.success(false);
+    @PostMapping("/getByUsername")
+    public Result getByUsername(@RequestBody String username){
+        User user=loginService.getByUsername(username);
+        if(user!=null) {
+            return Result.success(user);
         }
-        return Result.success(true);
+        return Result.error("该用户不存在");
     }
 }

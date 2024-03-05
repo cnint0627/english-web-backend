@@ -5,5 +5,5 @@ import com.example.demo.pojo.User;
 public interface LoginService {
     public User login(User user);
     public void register(User user);
-    public User validate(String username);
+    public User getByUsername(String username);
 }

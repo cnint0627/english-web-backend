@@ -1,7 +1,14 @@
-# spring
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/demo
     username: root
     password: 123456
+
+mybatis:
+  # 指定实体类
+  type-aliases-package: com.example.demo.pojo
+  # 指定mapper映射配置包
+  mapper-locations: classpath*:com/example/demo/mapper/*.xml
+  # 指定handler的位置
+  type-handlers-package: com.example.demo.handler

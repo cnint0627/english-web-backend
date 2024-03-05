@@ -15,8 +15,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User login(User user){
-        User userLogin=loginMapper.getByUsernameAndPassword(user);
-        return userLogin;
+        return loginMapper.getByUsernameAndPassword(user);
     }
 
     @Override
@@ -25,8 +24,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User validate(String username){
-        User user=loginMapper.getByUsername(username);
-        return user;
+    public User getByUsername(String username){
+        return loginMapper.getByUsername(username);
     }
 }
