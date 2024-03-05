@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reading")
+@CrossOrigin
 public class ReadingController {
     @Autowired
     private ReadingService readingService;
