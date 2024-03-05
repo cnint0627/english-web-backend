@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     /**
-     * 用户登录
+     * 用户登录 举个例子
      * @param user 用户登录账号密码
      * @return 登录成功得到的token
      */
@@ -55,9 +55,9 @@ public class LoginController {
     }
 
     /**
-     * 检验用户名是否合法
+     * 根据用户名查找用户
      * @param username 用户名
-     * @return 检验结果
+     * @return 查找结果
      */
     @PostMapping("/getByUsername")
     public Result getByUsername(@RequestBody String username){
