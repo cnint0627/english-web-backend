@@ -1,4 +1,4 @@
-package com.example.demo.handler;
+package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.pojo.Result;

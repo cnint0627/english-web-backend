@@ -8,13 +8,13 @@ public class Result<T> {
     private T data;
     public static Result success(){
         Result result=new Result<>();
-        result.setMsg("成功");
+        result.setMsg("操作成功");
         return result;
     }
 
     public static <T> Result<T> success(T data){
         Result<T> result=new Result<>();
-        result.setMsg("成功");
+        result.setMsg("操作成功");
         result.setData(data);
         return result;
     }
