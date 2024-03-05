@@ -2,9 +2,6 @@ package com.example.demo.pojo;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Map;
 
 @Data
 public class Reading {
