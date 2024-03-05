@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ReadingMapper">
+    <insert id="addReading" parameterType="com.example.demo.pojo.Reading">
+        insert into reading_comprehension
+        (title,content,question)
+        values(#{title},#{content},
+        #{question,typeHandler=com.example.demo.handler.MySqlJsonHandler})
+    </insert>
+</mapper>
