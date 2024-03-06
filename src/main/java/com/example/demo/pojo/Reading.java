@@ -12,4 +12,6 @@ public class Reading {
     private String title;
     // 文章正文
     private String content;
+    // 文章下的题目列表
+    private List<ReadingQuestion> questions;
 }

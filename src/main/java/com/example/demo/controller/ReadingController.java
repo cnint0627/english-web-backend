@@ -5,7 +5,6 @@ import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.Result;
 import com.example.demo.service.ReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public class ReadingController {
     private ReadingService readingService;
 
     /**
-     * 获取所有文章
-     * @return 包含所有文章的数组
+     * 获取所有文章的简略信息（id，标题）
+     * @return 包含所有文章简略信息的列表
      */
     @GetMapping("/list")
     public Result list(){
@@ -28,9 +27,18 @@ public class ReadingController {
     }
 
     /**
-     * 根据id获取文章
+     * 分页获取文章的简略信息（id，标题）
+     * @return 包含文章简略信息的列表
+     */
+    @PostMapping("/page")
+    public Result page(@RequestParam int pageNum,@RequestParam int pageSize){
+        return Result.success(readingService.page(pageNum,pageSize));
+    }
+
+    /**
+     * 根据id获取文章全部信息
      * @param id 文章id
-     * @return 指定id的文章
+     * @return 指定id文章的全部信息
      */
     @PostMapping("/getById")
     public Result getById(@RequestBody String id){

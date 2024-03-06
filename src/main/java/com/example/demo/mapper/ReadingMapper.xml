@@ -7,6 +7,47 @@
 <!--        values(#{title},#{content},-->
 <!--        #{question,typeHandler=com.example.demo.handler.MySqlJsonHandler})-->
 <!--    </insert>-->
+    <resultMap id="readingMap" type="Reading">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+
+        <!--配置集合信息
+            property: 集合名称
+            ofType: 当前集合中的数据类型
+        -->
+        <collection property="questions" ofType="ReadingQuestion">
+            <id property="id" column="qid"></id>
+            <result property="readingId" column="reading_id"></result>
+            <result property="title" column="qtitle"></result>
+            <result property="answer" column="answer"></result>
+            <collection property="options" ofType="ReadingQuestionOption">
+                <id property="id" column="oid"></id>
+                <result property="questionId" column="question_id"></result>
+                <result property="content" column="ocontent"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="readingMap">
+        select r.id,
+               r.title,
+               r.content,
+               q.id as qid,
+               q.title as qtitle,
+               q.answer,
+               q.reading_id,
+               o.id as oid,
+               o.content as ocontent,
+               o.question_id
+        from reading r
+        left join reading_question q
+        on r.id = q.reading_id
+        left join reading_question_option o
+        on q.id = o.question_id
+        where r.id = #{id}
+        order by oid
+    </select>
 
     <insert id="addReading" parameterType="reading" useGeneratedKeys="true" keyProperty="id">
         insert into reading

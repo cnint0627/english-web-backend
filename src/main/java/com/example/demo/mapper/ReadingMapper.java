@@ -5,14 +5,21 @@ import com.example.demo.pojo.ReadingQuestion;
 import com.example.demo.pojo.ReadingQuestionOption;
 import org.apache.ibatis.annotations.*;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.session.RowBounds;
+
 import java.util.List;
 
 @Mapper
 public interface ReadingMapper {
-    @Select("select * from reading")
+    @Select("select id,title from reading")
     public List<Reading> list();
 
-    @Select("select * from reading where id = #{id}")
+    @Select("select id,title from reading")
+    public List<Reading> page(RowBounds rowBounds);
+
+    @Select("select count(*) from reading")
+    public int count();
+
     public Reading getById(String id);
 
     public void addReading(Reading reading);

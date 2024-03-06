@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ReadingService {
     public List<Reading> list();
+    public List<Reading> page(int pageNum,int pageSize);
     public Reading getById(String id);
     public void add(JSONObject reading);
 }
