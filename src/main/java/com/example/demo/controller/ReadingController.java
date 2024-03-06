@@ -1,10 +1,15 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.Result;
 import com.example.demo.service.ReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/reading")
@@ -38,25 +43,12 @@ public class ReadingController {
 
     /**
      * 新增文章
-     * @param reading 文章实体
+     * @param reading 文章JSON
      * @return 新增结果
      */
-    @PostMapping("addReading")
-    public Result addReading(@RequestBody Reading reading){
-        /**
-         * reading.question为JSON格式，格式如下
-         * reading.question={
-         *  "1":{
-         *      "title":"title1",
-         *      "option":["option1","option2","option3","option4"]
-         *      },
-         *  "2":{
-         *      "title":"title2",
-         *      "option":["option1","option2","option3","option4"]
-         *      }
-         *  }
-         */
-        readingService.addReading(reading);
+    @PostMapping("add")
+    public Result add(@RequestBody JSONObject reading){
+        readingService.add(reading);
         return Result.success();
     }
 }

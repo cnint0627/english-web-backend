@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.ReadingMapper">
-    <insert id="addReading" parameterType="com.example.demo.pojo.Reading">
-        insert into reading_comprehension
-        (title,content,question)
-        values(#{title},#{content},
-        #{question,typeHandler=com.example.demo.handler.MySqlJsonHandler})
+<!--    <insert id="addReading" parameterType="com.example.demo.pojo.Reading">-->
+<!--        insert into reading_comprehension-->
+<!--        (title,content,question)-->
+<!--        values(#{title},#{content},-->
+<!--        #{question,typeHandler=com.example.demo.handler.MySqlJsonHandler})-->
+<!--    </insert>-->
+
+    <insert id="addReading" parameterType="reading" useGeneratedKeys="true" keyProperty="id">
+        insert into reading
+        (title,content)
+        values(#{title},#{content})
     </insert>
+    <insert id="addReadingQuestion" useGeneratedKeys="true" keyProperty="id">
+        insert into reading_question
+        (reading_id,title,answer)
+        values
+        <foreach item="item" index="index" collection="readingQuestionList" separator=",">
+            (#{item.readingId},#{item.title},#{item.answer})
+        </foreach>
+    </insert>
+    <insert id="addReadingQuestionOption">
+        insert into reading_question_option
+        (question_id,content)
+        values
+        <foreach item="item" index="index" collection="readingQuestionOptionList" separator=",">
+            (#{item.questionId},#{item.content})
+        </foreach>
+    </insert>
+
+
 </mapper>

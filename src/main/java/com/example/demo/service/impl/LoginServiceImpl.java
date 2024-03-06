@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void register(User user){
-        loginMapper.addUser(user);
+        loginMapper.add(user);
     }
 
     @Override

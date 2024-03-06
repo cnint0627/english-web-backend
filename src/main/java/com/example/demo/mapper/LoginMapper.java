@@ -17,5 +17,5 @@ public interface LoginMapper {
 
     // 注册新用户
     @Insert("insert into user(username,password) values(#{username},#{password})")
-    public void addUser(User user);
+    public void add(User user);
 }

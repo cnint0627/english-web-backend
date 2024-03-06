@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     /**
-     * 用户登录 举个例子
+     * 用户登录
      * @param user 用户登录账号密码
      * @return 登录成功得到的token
      */
