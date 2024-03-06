@@ -18,3 +18,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/**");//设置不拦截的请求路径
     }
 }
+
