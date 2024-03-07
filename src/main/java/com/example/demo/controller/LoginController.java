@@ -46,7 +46,7 @@ public class LoginController {
      */
     @PostMapping("/register")
     public Result register(@RequestBody User user){
-        if(getByUsername(user.getUsername()).getData()==null){
+        if(loginService.getByUsername(user.getUsername())==null){
             // 用户名合法
             loginService.register(user);
             return Result.success();

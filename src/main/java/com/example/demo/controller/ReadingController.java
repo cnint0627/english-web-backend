@@ -41,7 +41,7 @@ public class ReadingController {
      * @return 指定id文章的全部信息
      */
     @PostMapping("/getById")
-    public Result getById(@RequestBody String id){
+    public Result getById(@RequestBody Long id){
         Reading reading=readingService.getById(id);
         if(reading!=null){
             return Result.success(reading);
@@ -58,5 +58,21 @@ public class ReadingController {
     public Result add(@RequestBody JSONObject reading){
         readingService.add(reading);
         return Result.success();
+    }
+
+    /**
+     * 根据id删除文章
+     * @param id 文章id
+     * @return 删除结果
+     */
+    @PostMapping("delete")
+    public Result delete(@RequestBody Long id){
+        Reading reading=readingService.getById(id);
+        if(reading!=null){
+            // 该id文章存在，删除
+            readingService.delete(id);
+            return Result.success();
+        }
+        return Result.error("文章id不存在");
     }
 }

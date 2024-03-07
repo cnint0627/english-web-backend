@@ -41,7 +41,7 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public Reading getById(String id){
+    public Reading getById(Long id){
         return readingMapper.getById(id);
     }
 
@@ -78,7 +78,10 @@ public class ReadingServiceImpl implements ReadingService {
             }
         }
         readingMapper.addReadingQuestionOption(readingQuestionOptionList);
+    }
 
-
+    @Override
+    public void delete(Long id){
+        readingMapper.delete(id);
     }
 }

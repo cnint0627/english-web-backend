@@ -20,11 +20,13 @@ public interface ReadingMapper {
     @Select("select count(*) from reading")
     public int count();
 
-    public Reading getById(String id);
+    public Reading getById(Long id);
 
     public void addReading(Reading reading);
 
     public void addReadingQuestion(List<ReadingQuestion> readingQuestionList);
 
     public void addReadingQuestionOption(List<ReadingQuestionOption> readingQuestionOptionList);
+
+    public void delete(Long id);
 }

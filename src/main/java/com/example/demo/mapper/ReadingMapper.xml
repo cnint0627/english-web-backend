@@ -70,6 +70,13 @@
             (#{item.questionId},#{item.content})
         </foreach>
     </insert>
+    <delete id="delete">
+        delete r,q,o
+        from reading r
+        left join reading_question q on r.id = q.reading_id
+        left join reading_question_option o on q.id = o.question_id
+        where r.id = #{id}
+    </delete>
 
 
 </mapper>
