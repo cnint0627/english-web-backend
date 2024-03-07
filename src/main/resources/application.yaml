@@ -13,6 +13,7 @@ mybatis:
   # 指定handler的位置
   type-handlers-package: com.example.demo.handler
 
+# minio文件服务器
 minio:
   host: http://127.0.0.1:9000
   url: ${minio.host}/
