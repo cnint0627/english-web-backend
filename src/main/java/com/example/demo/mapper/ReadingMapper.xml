@@ -11,6 +11,7 @@
         <id column="id" property="id"></id>
         <result column="title" property="title"></result>
         <result column="content" property="content"></result>
+        <result column="create_time" property="createTime"></result>
 
         <!--配置集合信息
             property: 集合名称
@@ -33,9 +34,10 @@
         select r.id,
                r.title,
                r.content,
+               r.create_time,
                q.id as qid,
                q.title as qtitle,
-               q.answer,
+--                q.answer,
                q.reading_id,
                o.id as oid,
                o.content as ocontent,
@@ -49,10 +51,19 @@
         order by oid
     </select>
 
+    <select id="getAnswerById">
+        select q.answer
+        from reading r
+        left join reading_question q
+        on r.id = q.reading_id
+        where r.id = #{id}
+        order by q.id
+    </select>
+
     <insert id="addReading" parameterType="reading" useGeneratedKeys="true" keyProperty="id">
         insert into reading
-        (title,content)
-        values(#{title},#{content})
+        (title,content,create_time)
+        values(#{title},#{content},curdate())
     </insert>
     <insert id="addReadingQuestion" useGeneratedKeys="true" keyProperty="id">
         insert into reading_question

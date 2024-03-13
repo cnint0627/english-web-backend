@@ -4,6 +4,8 @@ import com.example.demo.pojo.Result;
 import com.example.demo.pojo.User;
 import com.example.demo.service.LoginService;
 import com.example.demo.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,17 +56,22 @@ public class LoginController {
         return Result.error("用户名重复");
     }
 
+
     /**
-     * 根据用户名查找用户
-     * @param username 用户名
-     * @return 查找结果
+     * 根据请求头中的token密钥获取用户信息
+     * @return 获取结果
      */
-    @PostMapping("/getByUsername")
-    public Result getByUsername(@RequestBody String username){
-        User user=loginService.getByUsername(username);
-        if(user!=null) {
-            return Result.success(user);
+    @GetMapping("/getByToken")
+    public Result getByToken(HttpServletRequest request){
+        String token=request.getHeader("token");
+        try {
+            Claims claims = JwtUtils.parseJWT(token);
+            Map<String, Object> result=new HashMap<>();
+            result.put("id",claims.get("id"));
+            result.put("username",claims.get("username"));
+            return Result.success(result);
+        }catch(Exception e){
+            return Result.error("token解析错误");
         }
-        return Result.error("该用户不存在");
     }
 }

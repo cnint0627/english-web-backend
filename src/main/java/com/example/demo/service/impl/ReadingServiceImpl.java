@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class ReadingServiceImpl implements ReadingService {
@@ -30,19 +29,27 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<Reading> page(int pageNum,int pageSize){
+    public Map<String,Object> page(int pageNum,int pageSize){
         int count = readingMapper.count();  //总条数
         //计算出：共有多少页、这页的偏移量offset是多少
         int pageNums = (count / pageSize) + 1;  //共有多少页
         int offset = (pageNum - 1) * pageSize;  //偏移量
 
         RowBounds rowBounds = new RowBounds(offset,pageSize);
-        return readingMapper.page(rowBounds);
+        Map<String,Object> result=new HashMap<>();
+        result.put("records",readingMapper.page(rowBounds));
+        result.put("total",count);
+        return result;
     }
 
     @Override
     public Reading getById(Long id){
         return readingMapper.getById(id);
+    }
+
+    @Override
+    public List<String> getAnswerById(Long id){
+        return readingMapper.getAnswerById(id);
     }
 
     @Override

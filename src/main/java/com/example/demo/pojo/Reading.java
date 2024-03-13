@@ -2,8 +2,8 @@ package com.example.demo.pojo;
 
 import lombok.Data;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 @Data
 public class Reading {
@@ -12,6 +12,8 @@ public class Reading {
     private String title;
     // 文章正文
     private String content;
+    // 创建时间
+    private String createTime;
     // 文章下的题目列表
     private List<ReadingQuestion> questions;
 }

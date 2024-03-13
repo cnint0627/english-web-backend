@@ -11,16 +11,18 @@ import java.util.List;
 
 @Mapper
 public interface ReadingMapper {
-    @Select("select id,title from reading")
+    @Select("select id,title,create_time as createTime from reading")
     public List<Reading> list();
 
-    @Select("select id,title from reading")
+    @Select("select id,title,create_time as createTime from reading")
     public List<Reading> page(RowBounds rowBounds);
 
     @Select("select count(*) from reading")
     public int count();
 
     public Reading getById(Long id);
+
+    public List<String> getAnswerById(Long id);
 
     public void addReading(Reading reading);
 
