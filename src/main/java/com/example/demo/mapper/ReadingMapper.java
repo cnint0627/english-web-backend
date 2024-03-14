@@ -21,6 +21,7 @@ public interface ReadingMapper {
     public int count();
 
     public Reading getById(Long id);
+    public Reading getAllById(Long id);
 
     public List<String> getAnswerById(Long id);
 
@@ -29,6 +30,12 @@ public interface ReadingMapper {
     public void addReadingQuestion(List<ReadingQuestion> readingQuestionList);
 
     public void addReadingQuestionOption(List<ReadingQuestionOption> readingQuestionOptionList);
+
+    public void editReading(Reading reading);
+
+    public void editReadingQuestion(List<ReadingQuestion> readingQuestionList);
+
+    public void editReadingQuestionOption(List<ReadingQuestionOption> readingQuestionOptionList);
 
     public void delete(Long id);
 }

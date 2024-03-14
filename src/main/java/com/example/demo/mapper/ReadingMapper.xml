@@ -51,6 +51,27 @@
         order by oid
     </select>
 
+    <select id="getAllById" resultMap="readingMap">
+        select r.id,
+               r.title,
+               r.content,
+               r.create_time,
+               q.id as qid,
+               q.title as qtitle,
+               q.answer,
+               q.reading_id,
+               o.id as oid,
+               o.content as ocontent,
+               o.question_id
+        from reading r
+                 left join reading_question q
+                           on r.id = q.reading_id
+                 left join reading_question_option o
+                           on q.id = o.question_id
+        where r.id = #{id}
+        order by oid
+    </select>
+
     <select id="getAnswerById">
         select q.answer
         from reading r

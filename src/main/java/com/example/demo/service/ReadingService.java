@@ -9,8 +9,9 @@ import java.util.Map;
 public interface ReadingService {
     public List<Reading> list();
     public Map<String,Object> page(int pageNum, int pageSize);
-    public Reading getById(Long id);
+    public Reading getById(Long id,int isAdmin);
     public List<String> getAnswerById(Long id);
     public void add(JSONObject reading);
+    public void edit(JSONObject reading);
     public void delete(Long id);
 }

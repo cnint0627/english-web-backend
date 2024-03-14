@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private LoginCheckInterceptor loginCheckInterceptor;
+    @Autowired
+    private PermissionCheckInterceptor permissionCheckInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
@@ -17,6 +19,10 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/**");//设置不拦截的请求路径
+        registry.addInterceptor(permissionCheckInterceptor)
+                .addPathPatterns("/reading/add")
+                .addPathPatterns("/reading/edit")
+                .addPathPatterns("/reading/delete");
     }
 }
 

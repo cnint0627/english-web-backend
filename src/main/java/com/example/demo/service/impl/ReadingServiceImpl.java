@@ -43,7 +43,10 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public Reading getById(Long id){
+    public Reading getById(Long id,int isAdmin){
+        if(isAdmin==1){
+            return readingMapper.getAllById(id);
+        }
         return readingMapper.getById(id);
     }
 
@@ -85,6 +88,11 @@ public class ReadingServiceImpl implements ReadingService {
             }
         }
         readingMapper.addReadingQuestionOption(readingQuestionOptionList);
+    }
+
+    @Override
+    public void edit(JSONObject readingJson){
+
     }
 
     @Override

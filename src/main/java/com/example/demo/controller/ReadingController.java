@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.Result;
+import com.example.demo.pojo.User;
+import com.example.demo.service.LoginService;
 import com.example.demo.service.ReadingService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,8 @@ import java.util.Map;
 public class ReadingController {
     @Autowired
     private ReadingService readingService;
+    @Autowired
+    private LoginController loginController;
 
     /**
      * 获取所有文章的简略信息（id，标题）
@@ -38,13 +44,15 @@ public class ReadingController {
     }
 
     /**
-     * 根据id获取文章除答案外的全部信息
+     * 根据id获取文章的全部信息
+     * 如果是非管理员则隐藏文章题目的答案
      * @param id 文章id
-     * @return 指定id文章除答案外的全部信息
+     * @return 指定id文章的全部信息
      */
     @GetMapping("/getById")
-    public Result getById(@RequestParam Long id){
-        Reading reading=readingService.getById(id);
+    public Result getById(@RequestParam Long id,HttpServletRequest request){
+        int isAdmin=(int)((Map)loginController.getByToken(request).getData()).get("isAdmin");
+        Reading reading=readingService.getById(id,isAdmin);
         if(reading!=null){
             return Result.success(reading);
         }
@@ -85,10 +93,24 @@ public class ReadingController {
      * @param reading 文章JSON
      * @return 新增结果
      */
-    @PostMapping("add")
+    @PostMapping("/add")
     public Result add(@RequestBody JSONObject reading){
         readingService.add(reading);
         return Result.success();
+    }
+
+    /**
+     * 编辑文章
+     * @param reading 文章JSON
+     * @return 编辑结果
+     */
+    @PostMapping("/edit")
+    public Result edit(@RequestBody JSONObject reading){
+        if(readingService.getById(reading.getLong("id"),0)!=null) {
+            readingService.edit(reading);
+            return Result.success();
+        }
+        return Result.error("文章id不存在");
     }
 
     /**
@@ -96,9 +118,9 @@ public class ReadingController {
      * @param id 文章id
      * @return 删除结果
      */
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        Reading reading=readingService.getById(id);
+        Reading reading=readingService.getById(id,0);
         if(reading!=null){
             // 该id文章存在，删除
             readingService.delete(id);
