@@ -16,6 +16,6 @@ public interface LoginMapper {
     public User getByUsername(String username);
 
     // 注册新用户
-    @Insert("insert into user(username,password) values(#{username},#{password})")
+    @Insert("insert into user(username,password,admin) values(#{username},#{password},0)")
     public void add(User user);
 }

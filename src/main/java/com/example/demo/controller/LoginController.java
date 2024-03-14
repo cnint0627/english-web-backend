@@ -34,6 +34,7 @@ public class LoginController {
             Map<String,Object> claims=new HashMap<>();
             claims.put("id",userLogin.getId());
             claims.put("username",userLogin.getUsername());
+            claims.put("isAdmin",userLogin.getAdmin());
             // 使用jwt工具类生成身份令牌
             String token= JwtUtils.generateJwt(claims);
             return Result.success(token);
@@ -69,6 +70,7 @@ public class LoginController {
             Map<String, Object> result=new HashMap<>();
             result.put("id",claims.get("id"));
             result.put("username",claims.get("username"));
+            result.put("isAdmin",claims.get("isAdmin"));
             return Result.success(result);
         }catch(Exception e){
             return Result.error("token解析错误");
