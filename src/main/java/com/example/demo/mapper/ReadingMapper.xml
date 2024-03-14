@@ -86,6 +86,11 @@
         (title,content,create_time)
         values(#{title},#{content},curdate())
     </insert>
+    <insert id="editReading" parameterType="reading">
+        insert into reading
+        (id,title,content)
+        values(#{id},#{title},#{content})
+    </insert>
     <insert id="addReadingQuestion" useGeneratedKeys="true" keyProperty="id">
         insert into reading_question
         (reading_id,title,answer)
@@ -102,6 +107,7 @@
             (#{item.questionId},#{item.content})
         </foreach>
     </insert>
+
     <delete id="delete">
         delete r,q,o
         from reading r
@@ -109,6 +115,7 @@
         left join reading_question_option o on q.id = o.question_id
         where r.id = #{id}
     </delete>
+
 
 
 </mapper>

@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
@@ -15,14 +18,20 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        //注册自定义拦截器对象
+        // 注册自定义拦截器对象
+        // 用户登录拦截
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/**");//设置不拦截的请求路径
+        // 用户权限拦截
         registry.addInterceptor(permissionCheckInterceptor)
-                .addPathPatterns("/reading/add")
-                .addPathPatterns("/reading/edit")
-                .addPathPatterns("/reading/delete");
+                .addPathPatterns(Arrays.asList(
+                        "/reading/add",
+                        "/reading/edit",
+                        "/reading/delete",
+                        "/reading/getAllById",
+                        "/file/**"
+                ));
     }
 }
 

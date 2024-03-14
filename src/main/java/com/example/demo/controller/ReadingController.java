@@ -22,8 +22,6 @@ import java.util.Map;
 public class ReadingController {
     @Autowired
     private ReadingService readingService;
-    @Autowired
-    private LoginController loginController;
 
     /**
      * 获取所有文章的简略信息（id，标题）
@@ -44,15 +42,28 @@ public class ReadingController {
     }
 
     /**
+     * 根据id获取文章除答案外的全部信息
+     * @param id 文章id
+     * @return 指定id文章除答案外的全部信息
+     */
+    @GetMapping("/getById")
+    public Result getById(@RequestParam Long id){
+        Reading reading=readingService.getById(id);
+        if(reading!=null){
+            return Result.success(reading);
+        }
+        return Result.error("文章id不存在");
+    }
+
+    /**
      * 根据id获取文章的全部信息
-     * 如果是非管理员则隐藏文章题目的答案
+     * 需要管理员权限
      * @param id 文章id
      * @return 指定id文章的全部信息
      */
-    @GetMapping("/getById")
-    public Result getById(@RequestParam Long id,HttpServletRequest request){
-        int isAdmin=(int)((Map)loginController.getByToken(request).getData()).get("isAdmin");
-        Reading reading=readingService.getById(id,isAdmin);
+    @GetMapping("/getAllById")
+    public Result getAllById(@RequestParam Long id){
+        Reading reading=readingService.getAllById(id);
         if(reading!=null){
             return Result.success(reading);
         }
@@ -90,6 +101,7 @@ public class ReadingController {
 
     /**
      * 新增文章
+     * 需要管理员权限
      * @param reading 文章JSON
      * @return 新增结果
      */
@@ -101,12 +113,13 @@ public class ReadingController {
 
     /**
      * 编辑文章
+     * 需要管理员权限
      * @param reading 文章JSON
      * @return 编辑结果
      */
     @PostMapping("/edit")
     public Result edit(@RequestBody JSONObject reading){
-        if(readingService.getById(reading.getLong("id"),0)!=null) {
+        if(readingService.getById(reading.getLong("id"))!=null) {
             readingService.edit(reading);
             return Result.success();
         }
@@ -115,12 +128,13 @@ public class ReadingController {
 
     /**
      * 根据id删除文章
+     * 需要管理员权限
      * @param id 文章id
      * @return 删除结果
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        Reading reading=readingService.getById(id,0);
+        Reading reading=readingService.getById(id);
         if(reading!=null){
             // 该id文章存在，删除
             readingService.delete(id);

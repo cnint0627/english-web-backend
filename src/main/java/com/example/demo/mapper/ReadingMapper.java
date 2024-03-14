@@ -33,9 +33,6 @@ public interface ReadingMapper {
 
     public void editReading(Reading reading);
 
-    public void editReadingQuestion(List<ReadingQuestion> readingQuestionList);
-
-    public void editReadingQuestionOption(List<ReadingQuestionOption> readingQuestionOptionList);
-
     public void delete(Long id);
+
 }
