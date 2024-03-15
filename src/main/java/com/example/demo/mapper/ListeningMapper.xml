@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.ListeningMapper">
+    <resultMap id="listeningMap" type="Listening">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="audio_path" property="audioPath"></result>
+        <result column="create_time" property="createTime"></result>
+
+        <!--配置集合信息
+            property: 集合名称
+            ofType: 当前集合中的数据类型
+        -->
+        <collection property="questions" ofType="ListeningQuestion">
+            <id property="id" column="qid"></id>
+            <result property="listeningId" column="listening_id"></result>
+            <result property="content" column="content"></result>
+            <result property="answer" column="answer"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="listeningMap">
+        select l.id,
+               l.title,
+               l.audio_path,
+               l.create_time,
+               q.id as qid,
+               q.content as content,
+--                q.answer,
+               q.listening_id
+        from listening l
+                 left join listening_question q
+                           on l.id = q.listening_id
+        where l.id = #{id}
+        order by qid
+    </select>
+
+    <select id="getAllById" resultMap="listeningMap">
+        select l.id,
+               l.title,
+               l.audio_path,
+               l.create_time,
+               q.id as qid,
+               q.content as content,
+               q.answer,
+               q.listening_id
+        from listening l
+                 left join listening_question q
+                           on l.id = q.listening_id
+        where l.id = #{id}
+        order by qid
+    </select>
+
+    <select id="getAnswerById">
+        select q.answer
+        from listening l
+             left join listening_question q
+                       on l.id = q.listening_id
+        where l.id = #{id}
+        order by q.id
+    </select>
+
+    <insert id="addListening" parameterType="listening" useGeneratedKeys="true" keyProperty="id">
+        insert into listening
+        (title,audio_path,create_time)
+        values(#{title},#{audioPath},curdate())
+    </insert>
+    <insert id="addListeningQuestion">
+        insert into listening_question
+        (listening_id,content,answer)
+        values
+        <foreach item="item" index="index" collection="listeningQuestionList" separator=",">
+            (#{item.listeningId},#{item.content},#{item.answer})
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        delete l,q
+        from listening l
+        left join listening_question q on l.id = q.listening_id
+        where l.id = #{id}
+    </delete>
+</mapper>

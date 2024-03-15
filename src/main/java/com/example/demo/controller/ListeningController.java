@@ -2,13 +2,10 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.pojo.Listening;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.Result;
-import com.example.demo.pojo.User;
-import com.example.demo.service.LoginService;
-import com.example.demo.service.ReadingService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.example.demo.service.ListeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,70 +15,70 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/reading")
+@RequestMapping("/listening")
 @CrossOrigin
-public class ReadingController {
+public class ListeningController {
     @Autowired
-    private ReadingService readingService;
+    private ListeningService listeningService;
 
     /**
-     * 获取所有文章的简略信息（id，标题）
-     * @return 包含所有文章简略信息的列表
+     * 获取所有听力的简略信息（id，标题）
+     * @return 包含所有听力简略信息的列表
      */
     @GetMapping("/list")
     public Result list(){
-        return Result.success(readingService.list());
+        return Result.success(listeningService.list());
     }
 
     /**
-     * 分页获取文章的简略信息（id，标题）
-     * @return 包含文章简略信息的列表和文章总个数
+     * 分页获取听力的简略信息（id，标题）
+     * @return 包含听力简略信息的列表和听力总个数
      */
     @GetMapping("/page")
-    public Result page(@RequestParam int pageNum,@RequestParam int pageSize){
-        return Result.success(readingService.page(pageNum,pageSize));
+    public Result page(int pageNum, int pageSize){
+        return Result.success(listeningService.page(pageNum,pageSize));
     }
 
     /**
-     * 根据id获取文章除答案外的全部信息
-     * @param id 文章id
-     * @return 指定id文章除答案外的全部信息
+     * 根据id获取听力除答案外的全部信息
+     * @param id 听力id
+     * @return 指定id听力除答案外的全部信息
      */
     @GetMapping("/getById")
     public Result getById(@RequestParam Long id){
-        Reading reading=readingService.getById(id);
-        if(reading!=null){
-            return Result.success(reading);
+        Listening listening=listeningService.getById(id);
+        if(listening!=null){
+            return Result.success(listening);
         }
-        return Result.error("文章id不存在");
+        return Result.error("听力id不存在");
     }
 
     /**
-     * 根据id获取文章的全部信息
+     * 根据id获取听力的全部信息
      * 需要管理员权限
-     * @param id 文章id
-     * @return 指定id文章的全部信息
+     * @param id 听力id
+     * @return 指定id听力的全部信息
      */
     @GetMapping("/getAllById")
     public Result getAllById(@RequestParam Long id){
-        Reading reading=readingService.getAllById(id);
-        if(reading!=null){
-            return Result.success(reading);
+        Listening listening=listeningService.getAllById(id);
+        if(listening!=null){
+            return Result.success(listening);
         }
-        return Result.error("文章id不存在");
+        return Result.error("听力id不存在");
     }
 
     /**
-     * 提交并检查阅读答案
-     * @param id 文章id
+     * 提交并检查听力答案
+     * @param id 听力id
      * @param records 用户答案
      * @return 答题结果
      */
     @PostMapping("/submitAnswer")
     public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records){
-        List<String> answers=readingService.getAnswerById(id);
+        List<String> answers=listeningService.getAnswerById(id);
         if(answers.isEmpty()){
-            return Result.error("文章id不存在");
+            return Result.error("听力id不存在");
         }
         if(answers.size()!=records.size()){
             return Result.error("用户提交答案数目与实际不符");
@@ -101,30 +98,15 @@ public class ReadingController {
     }
 
     /**
-     * 新增文章
+     * 新增听力
      * 需要管理员权限
-     * @param reading 文章实体
+     * @param listening 听力实体
      * @return 新增结果
      */
     @PostMapping("/add")
-    public Result add(@RequestBody Reading reading){
-        readingService.add(reading);
+    public Result add(@RequestBody Listening listening){
+        listeningService.add(listening);
         return Result.success();
-    }
-
-    /**
-     * 编辑文章
-     * 需要管理员权限
-     * @param reading 文章实体
-     * @return 编辑结果
-     */
-    @PostMapping("/edit")
-    public Result edit(@RequestBody Reading reading){
-        if(readingService.getById(reading.getId())!=null) {
-            readingService.edit(reading);
-            return Result.success();
-        }
-        return Result.error("文章id不存在");
     }
 
     /**
@@ -135,9 +117,9 @@ public class ReadingController {
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        if(readingService.getById(id)!=null){
+        if(listeningService.getById(id)!=null){
             // 该id文章存在，删除
-            readingService.delete(id);
+            listeningService.delete(id);
             return Result.success();
         }
         return Result.error("文章id不存在");

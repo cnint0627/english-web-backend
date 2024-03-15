@@ -30,6 +30,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "/reading/edit",
                         "/reading/delete",
                         "/reading/getAllById",
+                        "/listening/add",
+                        "/listening/edit",
+                        "/listening/delete",
+                        "/listening/getAllById",
                         "/file/**"
                 ));
     }
