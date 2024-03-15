@@ -12,7 +12,8 @@ public interface ReadingService {
     public Reading getById(Long id);
     public Reading getAllById(Long id);
     public List<String> getAnswerById(Long id);
-    public void add(JSONObject reading);
-    public void edit(JSONObject reading);
+//    public void add(JSONObject reading);
+    public void add(Reading reading);
+    public void edit(Reading reading);
     public void delete(Long id);
 }

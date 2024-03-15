@@ -106,7 +106,7 @@ public class ReadingController {
      * @return 新增结果
      */
     @PostMapping("/add")
-    public Result add(@RequestBody JSONObject reading){
+    public Result add(@RequestBody Reading reading){
         readingService.add(reading);
         return Result.success();
     }
@@ -118,8 +118,8 @@ public class ReadingController {
      * @return 编辑结果
      */
     @PostMapping("/edit")
-    public Result edit(@RequestBody JSONObject reading){
-        if(readingService.getById(reading.getLong("id"))!=null) {
+    public Result edit(@RequestBody Reading reading){
+        if(readingService.getById(reading.getId())!=null) {
             readingService.edit(reading);
             return Result.success();
         }
@@ -134,8 +134,7 @@ public class ReadingController {
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        Reading reading=readingService.getById(id);
-        if(reading!=null){
+        if(readingService.getById(id)!=null){
             // 该id文章存在，删除
             readingService.delete(id);
             return Result.success();

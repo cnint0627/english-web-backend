@@ -60,6 +60,8 @@ public class ReadingServiceImpl implements ReadingService {
         return readingMapper.getAnswerById(id);
     }
 
+    /*
+    这是之前用JSONObject作为传参写的add方法，现在改用Reading实体作为传参
     @Override
     public void add(JSONObject readingJson){
         Reading reading=new Reading();
@@ -95,44 +97,45 @@ public class ReadingServiceImpl implements ReadingService {
         readingMapper.addReadingQuestionOption(readingQuestionOptionList);
     }
 
-    @Override
-    public void edit(JSONObject readingJson){
-        // 感觉用更新的方式有点复杂，这里采用先删掉原有的文章，再新增文章的方式
-        this.delete(readingJson.getLong("id"));
-        // 把原来的id保留
-        Reading reading=new Reading();
-        // 设置文章字段属性
-        reading.setId(readingJson.getLong("id"));
-        reading.setTitle(readingJson.getString("title"));
-        reading.setContent(readingJson.getString("content"));
-        readingMapper.editReading(reading);
+     */
 
-        ObjectMapper mapper = new ObjectMapper();
-        List<JSONObject> readingQuestionJsonList=mapper.convertValue(readingJson.get("questions"),new TypeReference<>(){});
-        List<ReadingQuestion> readingQuestionList=new ArrayList<>();
-        List<ReadingQuestionOption> readingQuestionOptionList=new ArrayList<>();
-        for(JSONObject readingQuestionJson: readingQuestionJsonList){
-            ReadingQuestion readingQuestion=new ReadingQuestion();
-            // 设置题目字段属性
+    @Override
+    public void add(Reading reading){
+        readingMapper.addReading(reading);
+        List<ReadingQuestion> readingQuestionList=reading.getQuestions();
+        for(ReadingQuestion readingQuestion: readingQuestionList){
             readingQuestion.setReadingId(reading.getId());
-            readingQuestion.setTitle(readingQuestionJson.getString("title"));
-            readingQuestion.setAnswer(readingQuestionJson.getString("answer"));
-            readingQuestionList.add(readingQuestion);
         }
         readingMapper.addReadingQuestion(readingQuestionList);
-        for(int index=0;index<readingQuestionList.size();index++){
-            JSONObject readingQuestionJson=readingQuestionJsonList.get(index);
-            List<JSONObject> readingQuestionOptionJsonList=mapper.convertValue(readingQuestionJson.get("options"),new TypeReference<>(){});
-            for(JSONObject readingQuestionOptionJson: readingQuestionOptionJsonList){
-                ReadingQuestionOption readingQuestionOption=new ReadingQuestionOption();
-                // 设置选项字段属性
-                readingQuestionOption.setQuestionId(readingQuestionList.get(index).getId());
-                readingQuestionOption.setContent(readingQuestionOptionJson.getString("content"));
+        List<ReadingQuestionOption> readingQuestionOptionList=new ArrayList<>();
+        for(ReadingQuestion readingQuestion: readingQuestionList){
+            for(ReadingQuestionOption readingQuestionOption: readingQuestion.getOptions()){
+                readingQuestionOption.setQuestionId(readingQuestion.getId());
                 readingQuestionOptionList.add(readingQuestionOption);
             }
         }
         readingMapper.addReadingQuestionOption(readingQuestionOptionList);
+    }
 
+    @Override
+    public void edit(Reading reading){
+        // 感觉用更新的方式有点复杂，这里采用先删掉原有的文章，再新增文章的方式
+        this.delete(reading.getId());
+        // 把原来的id保留
+        readingMapper.editReading(reading);
+        List<ReadingQuestion> readingQuestionList=reading.getQuestions();
+        for(ReadingQuestion readingQuestion: readingQuestionList){
+            readingQuestion.setReadingId(reading.getId());
+        }
+        readingMapper.addReadingQuestion(readingQuestionList);
+        List<ReadingQuestionOption> readingQuestionOptionList=new ArrayList<>();
+        for(ReadingQuestion readingQuestion: readingQuestionList){
+            for(ReadingQuestionOption readingQuestionOption: readingQuestion.getOptions()){
+                readingQuestionOption.setQuestionId(readingQuestion.getId());
+                readingQuestionOptionList.add(readingQuestionOption);
+            }
+        }
+        readingMapper.addReadingQuestionOption(readingQuestionOptionList);
     }
 
     @Override
