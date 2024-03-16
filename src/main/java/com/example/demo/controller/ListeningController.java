@@ -110,6 +110,22 @@ public class ListeningController {
     }
 
     /**
+     * 编辑听力
+     * 需要管理员权限
+     * @param listening 听力实体
+     * @return 编辑结果
+     */
+    @PostMapping("/edit")
+    public Result edit(@RequestBody Listening listening){
+        if(listeningService.getById(listening.getId())!=null) {
+            listeningService.edit(listening);
+            return Result.success();
+        }
+        return Result.error(" 听力id不存在");
+    }
+
+
+    /**
      * 根据id删除文章
      * 需要管理员权限
      * @param id 文章id
@@ -122,6 +138,6 @@ public class ListeningController {
             listeningService.delete(id);
             return Result.success();
         }
-        return Result.error("文章id不存在");
+        return Result.error("听力id不存在");
     }
 }

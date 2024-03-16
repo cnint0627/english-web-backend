@@ -88,8 +88,8 @@
     </insert>
     <insert id="editReading" parameterType="reading">
         insert into reading
-        (id,title,content)
-        values(#{id},#{title},#{content})
+        (id,title,content,create_time)
+        values(#{id},#{title},#{content},#{createTime})
     </insert>
     <insert id="addReadingQuestion" useGeneratedKeys="true" keyProperty="id">
         insert into reading_question

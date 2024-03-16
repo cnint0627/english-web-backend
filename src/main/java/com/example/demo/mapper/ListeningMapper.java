@@ -29,6 +29,8 @@ public interface ListeningMapper {
 
     public void addListeningQuestion(List<ListeningQuestion> listeningQuestionList);
 
+    public void editListening(Listening listening);
+
     public void delete(Long id);
 
 }

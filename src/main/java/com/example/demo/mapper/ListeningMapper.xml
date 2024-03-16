@@ -75,6 +75,12 @@
         </foreach>
     </insert>
 
+    <insert id="editListening" parameterType="Listening">
+        insert into listening
+            (id,title,audio_path,create_time)
+        values(#{id},#{title},#{audioPath},#{createTime})
+    </insert>
+
     <delete id="delete">
         delete l,q
         from listening l

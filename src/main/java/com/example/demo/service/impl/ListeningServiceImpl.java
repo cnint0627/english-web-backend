@@ -75,6 +75,19 @@ public class ListeningServiceImpl implements ListeningService {
     }
 
     @Override
+    public void edit(Listening listening){
+        // 感觉用更新的方式有点复杂，这里采用先删掉原有的文章，再新增文章的方式
+        this.delete(listening.getId());
+        // 把原来的id保留
+        listeningMapper.editListening(listening);
+        List<ListeningQuestion> listeningQuestionList=listening.getQuestions();
+        for(ListeningQuestion listeningQuestion: listeningQuestionList){
+            listeningQuestion.setListeningId(listening.getId());
+        }
+        listeningMapper.addListeningQuestion(listeningQuestionList);
+    }
+
+    @Override
     public void delete(Long id){
         listeningMapper.delete(id);
     }
