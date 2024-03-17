@@ -28,6 +28,15 @@
                 <result property="content" column="ocontent"></result>
             </collection>
         </collection>
+        <collection property="records" ofType="QuestionRecord">
+            <id property="id" column="rid"></id>
+            <result property="textId" column="rreading_id"></result>
+            <result property="uid" column="uid"></result>
+            <result property="record" column="record"></result>
+            <result property="answer" column="answer"></result>
+            <result property="isCorrect" column="is_correct"></result>
+            <result property="createTime" column="rcreate_time"></result>
+        </collection>
     </resultMap>
 
     <select id="getById" resultMap="readingMap">
@@ -41,14 +50,22 @@
                q.reading_id,
                o.id as oid,
                o.content as ocontent,
-               o.question_id
+               o.question_id,
+               u.id as rid,
+               u.reading_id as rreading_id,
+               u.record,
+               u.answer,
+               u.is_correct,
+               u.create_time as rcreate_time
         from reading r
         left join reading_question q
         on r.id = q.reading_id
         left join reading_question_option o
         on q.id = o.question_id
+        left join user_reading_record u
+        on r.id = u.reading_id
         where r.id = #{id}
-        order by oid
+        order by oid,rid
     </select>
 
     <select id="getAllById" resultMap="readingMap">
@@ -80,6 +97,15 @@
         where r.id = #{id}
         order by q.id
     </select>
+
+    <insert id="submitAnswer">
+        insert into user_reading_record
+        (reading_id,uid,record,answer,is_correct,create_time)
+        values
+        <foreach item="item" index="index" collection="questionRecordList" separator=",">
+            (#{item.textId},#{item.uid},#{item.record},#{item.answer},#{item.isCorrect},curdate())
+        </foreach>
+    </insert>
 
     <insert id="addReading" parameterType="reading" useGeneratedKeys="true" keyProperty="id">
         insert into reading

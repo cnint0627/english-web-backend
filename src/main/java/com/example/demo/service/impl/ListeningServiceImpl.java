@@ -41,9 +41,9 @@ public class ListeningServiceImpl implements ListeningService {
         Listening listening=listeningMapper.getAllById(id);
         for(ListeningQuestion listeningQuestion: listening.getQuestions()){
             if(listeningQuestion.getAnswer()!=null){
-                listeningQuestion.setHasAnswer(1);
+                listeningQuestion.setHasBlank(1);
             }else{
-                listeningQuestion.setHasAnswer(0);
+                listeningQuestion.setHasBlank(0);
             }
             listeningQuestion.setAnswer(null);
         }

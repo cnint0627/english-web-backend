@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.ReadingQuestion;
 import com.example.demo.pojo.ReadingQuestionOption;
@@ -20,10 +21,12 @@ public interface ReadingMapper {
     @Select("select count(*) from reading")
     public int count();
 
-    public Reading getById(Long id);
+    public Reading getById(Long id,Long uid);
     public Reading getAllById(Long id);
 
     public List<String> getAnswerById(Long id);
+
+    public void submitAnswer(List<QuestionRecord> questionRecordList);
 
     public void addReading(Reading reading);
 

@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.mapper.ReadingMapper;
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.ReadingQuestion;
 import com.example.demo.pojo.ReadingQuestionOption;
 import com.example.demo.service.ReadingService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +48,8 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public Reading getById(Long id){
-        return readingMapper.getById(id);
+    public Reading getById(Long id, Long uid){
+        return readingMapper.getById(id,uid);
     }
 
     @Override
@@ -58,6 +60,11 @@ public class ReadingServiceImpl implements ReadingService {
     @Override
     public List<String> getAnswerById(Long id){
         return readingMapper.getAnswerById(id);
+    }
+
+    @Override
+    public void submitAnswer(List<QuestionRecord> questionRecordList){
+        readingMapper.submitAnswer(questionRecordList);
     }
 
     /*

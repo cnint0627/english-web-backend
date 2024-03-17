@@ -1,21 +1,19 @@
 package com.example.demo.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.Result;
 import com.example.demo.pojo.User;
-import com.example.demo.service.LoginService;
 import com.example.demo.service.ReadingService;
+import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/reading")
@@ -23,6 +21,8 @@ import java.util.Map;
 public class ReadingController {
     @Autowired
     private ReadingService readingService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 获取所有文章的简略信息（id，标题）
@@ -48,8 +48,10 @@ public class ReadingController {
      * @return 指定id文章除答案外的全部信息
      */
     @GetMapping("/getById")
-    public Result getById(@RequestParam Long id){
-        Reading reading=readingService.getById(id);
+    public Result getById(@RequestParam Long id, HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
+        Reading reading=readingService.getById(id,uid);
         if(reading!=null){
             return Result.success(reading);
         }
@@ -78,26 +80,29 @@ public class ReadingController {
      * @return 答题结果
      */
     @PostMapping("/submitAnswer")
-    public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records){
-        List<String> answers=readingService.getAnswerById(id);
-        if(answers.isEmpty()){
+    public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records, HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
+        List<String> answerList=readingService.getAnswerById(id);
+        if(answerList.isEmpty()){
             return Result.error("文章id不存在");
         }
-        if(answers.size()!=records.size()){
+        if(answerList.size()!=records.size()){
             return Result.error("用户提交答案数目与实际不符");
         }
-        List<Map> result=new ArrayList<>();
-        for(int index=0;index<answers.size();index++) {
+        List<QuestionRecord> questionRecordList=new ArrayList<>();
+        for(int index=0;index<answerList.size();index++) {
             // 对用户答案进行评判
-            Map<String, Object> question = new HashMap<>();
-            String answer=answers.get(index);
-            String record=records.get(index);
-            question.put("answer", answer);
-            question.put("record", record);
-            question.put("isCorrect", answer.equals(record));
-            result.add(question);
+            QuestionRecord questionRecord = new QuestionRecord();
+            questionRecord.setTextId(id);
+            questionRecord.setUid(uid);
+            questionRecord.setAnswer(answerList.get(index));
+            questionRecord.setRecord(records.get(index));
+            questionRecord.setIsCorrect(questionRecord.getAnswer().equals(questionRecord.getRecord())?1:0);
+            questionRecordList.add(questionRecord);
         }
-        return Result.success(result);
+        readingService.submitAnswer(questionRecordList);
+        return Result.success(questionRecordList);
     }
 
     /**
@@ -120,7 +125,7 @@ public class ReadingController {
      */
     @PostMapping("/edit")
     public Result edit(@RequestBody Reading reading){
-        if(readingService.getById(reading.getId())!=null) {
+        if(readingService.getById(reading.getId(),null)!=null) {
             readingService.edit(reading);
             return Result.success();
         }
@@ -135,7 +140,7 @@ public class ReadingController {
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        if(readingService.getById(id)!=null){
+        if(readingService.getById(id,null)!=null){
             // 该id文章存在，删除
             readingService.delete(id);
             return Result.success();

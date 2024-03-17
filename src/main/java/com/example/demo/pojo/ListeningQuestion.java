@@ -11,6 +11,6 @@ public class ListeningQuestion {
     private String content;
     // 填空答案
     private String answer;
-    // 该条内容是否有答案
-    private int hasAnswer;
+    // 该条内容是否有填空选项
+    private int hasBlank;
 }

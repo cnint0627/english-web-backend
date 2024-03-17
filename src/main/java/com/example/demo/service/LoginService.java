@@ -6,4 +6,5 @@ public interface LoginService {
     public User login(User user);
     public void register(User user);
     public User getByUsername(String username);
+    public User getByOpenid(String openid);
 }

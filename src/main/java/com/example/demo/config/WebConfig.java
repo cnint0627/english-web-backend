@@ -22,10 +22,12 @@ public class WebConfig implements WebMvcConfigurer {
         // 用户登录拦截
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/**");//设置不拦截的请求路径
+                .excludePathPatterns(
+                        "/auth/**",
+                        "/wx/**");//设置不拦截的请求路径
         // 用户权限拦截
         registry.addInterceptor(permissionCheckInterceptor)
-                .addPathPatterns(Arrays.asList(
+                .addPathPatterns(
                         "/reading/add",
                         "/reading/edit",
                         "/reading/delete",
@@ -35,7 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/listening/delete",
                         "/listening/getAllById",
                         "/file/**"
-                ));
+                );
     }
 }
 

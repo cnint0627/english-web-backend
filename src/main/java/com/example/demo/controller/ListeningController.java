@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+
 import com.example.demo.pojo.Listening;
-import com.example.demo.pojo.Reading;
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Result;
 import com.example.demo.service.ListeningService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +17,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/listening")
 @CrossOrigin
+@Slf4j
 public class ListeningController {
     @Autowired
     private ListeningService listeningService;
+    @Autowired
+    private FileController fileController;
 
     /**
      * 获取所有听力的简略信息（id，标题）
@@ -76,25 +79,24 @@ public class ListeningController {
      */
     @PostMapping("/submitAnswer")
     public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records){
-        List<String> answers=listeningService.getAnswerById(id);
-        if(answers.isEmpty()){
+        List<String> answerList=listeningService.getAnswerById(id);
+        if(answerList.isEmpty()){
             return Result.error("听力id不存在");
         }
-        if(answers.size()!=records.size()){
+        if(answerList.size()!=records.size()){
             return Result.error("用户提交答案数目与实际不符");
         }
-        List<Map> result=new ArrayList<>();
-        for(int index=0;index<answers.size();index++) {
+        List<QuestionRecord> questionRecordList=new ArrayList<>();
+        for(int index=0;index<answerList.size();index++) {
             // 对用户答案进行评判
-            Map<String, Object> question = new HashMap<>();
-            String answer=answers.get(index);
-            String record=records.get(index);
-            question.put("answer", answer);
-            question.put("record", record);
-            question.put("isCorrect", answer.equals(record));
-            result.add(question);
+            QuestionRecord questionRecord = new QuestionRecord();
+            questionRecord.setTextId(id);
+            questionRecord.setAnswer(answerList.get(index));
+            questionRecord.setRecord(records.get(index));
+            questionRecord.setIsCorrect(questionRecord.getAnswer().equals(questionRecord.getRecord())?1:0);
+            questionRecordList.add(questionRecord);
         }
-        return Result.success(result);
+        return Result.success(questionRecordList);
     }
 
     /**
@@ -126,16 +128,23 @@ public class ListeningController {
 
 
     /**
-     * 根据id删除文章
+     * 根据id删除听力
      * 需要管理员权限
-     * @param id 文章id
+     * @param id 听力id
      * @return 删除结果
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        if(listeningService.getById(id)!=null){
-            // 该id文章存在，删除
+        Listening listening=listeningService.getById(id);
+        if(listening!=null){
+            // 该id听力存在，删除
             listeningService.delete(id);
+            // 删除听力材料对应的音频文件
+            try {
+                fileController.removeObject("audios", listening.getAudioPath());
+            }catch(Exception e){
+                log.error(e.getMessage());
+            }
             return Result.success();
         }
         return Result.error("听力id不存在");

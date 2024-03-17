@@ -16,4 +16,6 @@ public class Reading {
     private String createTime;
     // 文章下的题目列表
     private List<ReadingQuestion> questions;
+    // 用户回答记录
+    private List<QuestionRecord> records;
 }

@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/file")
+@CrossOrigin
 public class FileController {
 
     @Autowired

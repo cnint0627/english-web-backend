@@ -4,6 +4,15 @@ spring:
     url: jdbc:mysql://localhost:3306/demo
     username: root
     password: 123456
+  servlet:
+    multipart:
+      # 设置传输大小
+      max-file-size: 20MB
+      max-request-size: 20MB
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 mybatis:
   # 指定实体类
   type-aliases-package: com.example.demo.pojo
@@ -22,3 +31,13 @@ minio:
 server:
   address: 0.0.0.0
   port: 8888
+
+# 微信登录
+# 微信开放平台 appid
+wx:
+  open:
+    appId: wx56319415423384c4
+    # 微信开放平台 appsecret
+    appSecret: e9c2a7baaffdd2280513fb9e918c673b
+    # 微信开放平台重定向url，即扫码登录后回调的后端api，中间的ip地址是内网穿透的
+    redirectUrl: http://e85a9b5.r9.cpolar.top/wx/login

@@ -5,16 +5,21 @@ import com.example.demo.pojo.User;
 import com.example.demo.service.LoginService;
 import com.example.demo.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @CrossOrigin
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -34,7 +39,7 @@ public class LoginController {
             Map<String,Object> claims=new HashMap<>();
             claims.put("id",userLogin.getId());
             claims.put("username",userLogin.getUsername());
-            claims.put("isAdmin",userLogin.getAdmin());
+            claims.put("isAdmin",userLogin.getIsAdmin());
             // 使用jwt工具类生成身份令牌
             String token= JwtUtils.generateJwt(claims);
             return Result.success(token);
@@ -55,25 +60,5 @@ public class LoginController {
             return Result.success();
         }
         return Result.error("用户名重复");
-    }
-
-
-    /**
-     * 根据请求头中的token密钥获取用户信息
-     * @return 获取结果
-     */
-    @GetMapping("/getByToken")
-    public Result getByToken(HttpServletRequest request){
-        String token=request.getHeader("token");
-        try {
-            Claims claims = JwtUtils.parseJWT(token);
-            Map<String, Object> result=new HashMap<>();
-            result.put("id",claims.get("id"));
-            result.put("username",claims.get("username"));
-            result.put("isAdmin",claims.get("isAdmin"));
-            return Result.success(result);
-        }catch(Exception e){
-            return Result.error("token解析错误");
-        }
     }
 }
