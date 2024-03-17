@@ -24,18 +24,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByToken(HttpServletRequest request){
-        try{
-            User user=new User();
-            Claims claims=JwtUtils.parseJWT(request.getHeader("token"));
-            user.setId(Long.parseLong(String.valueOf(claims.get("id"))));
-            user.setUsername(String.valueOf(claims.get("username")));
-            user.setIsAdmin(Integer.parseInt(String.valueOf(claims.get("isAdmin"))));
-            return user;
-        }catch(Exception e){
-            log.error("token解析错误");
-            log.error(e.getMessage());
-            return null;
-        }
+        User user=new User();
+        Claims claims=JwtUtils.parseJWT(request.getHeader("token"));
+        user.setId(Long.parseLong(String.valueOf(claims.get("id"))));
+        user.setUsername(String.valueOf(claims.get("username")));
+        user.setIsAdmin(Integer.parseInt(String.valueOf(claims.get("isAdmin"))));
+        return user;
     }
 
     @Override

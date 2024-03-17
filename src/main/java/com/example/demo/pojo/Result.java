@@ -28,4 +28,11 @@ public class Result<T> {
         result.setMsg(msg);
         return result;
     }
+
+    public static Result error(String msg,int code){
+        Result result=new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
 }

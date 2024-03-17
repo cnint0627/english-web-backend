@@ -28,11 +28,7 @@ public class UserController {
      */
     @GetMapping("/getByToken")
     public Result getByToken(HttpServletRequest request){
-        User user=userService.getByToken(request);
-        if(user!=null){
-            return Result.success(user);
-        }
-        return Result.error("token解析错误");
+        return Result.success(userService.getByToken(request));
     }
 
     /**

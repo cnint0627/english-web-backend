@@ -26,7 +26,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         // 4.判断令牌是否存在，如果不存在，返回错误结果（未登录）
         if(!StringUtils.hasLength(token)){
             log.info("token不存在");
-            Result responseResult= Result.error("NOT_LOGIN");
+            Result responseResult= Result.error("NOT_LOGIN",3001);
             String json=JSONObject.toJSONString(responseResult);
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(json);
@@ -38,7 +38,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             JwtUtils.parseJWT(token);
         }catch(Exception e){
             log.info("令牌解析失败");
-            Result responseResult= Result.error("NOT_LOGIN");
+            Result responseResult= Result.error("NOT_LOGIN",3001);
             String json=JSONObject.toJSONString(responseResult);
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(json);
