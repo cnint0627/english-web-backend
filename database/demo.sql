@@ -28,7 +28,7 @@ CREATE TABLE `listening` (
   `create_time` date DEFAULT NULL,
   `audio_path` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `listening` (
 
 LOCK TABLES `listening` WRITE;
 /*!40000 ALTER TABLE `listening` DISABLE KEYS */;
-INSERT INTO `listening` VALUES (7,'1','2024-03-16','111'),(8,'2','2024-03-16','111'),(9,'1','2024-03-16','111'),(15,'AAA','2024-03-16','111');
+INSERT INTO `listening` VALUES (28,'111','2024-03-16','1_lttt9i7d.mp3'),(29,'1111','2024-03-16','QQ空间视频_20220602233636_lttte2oo.mp3'),(30,'TEST','2024-03-16','1_ltu6dqlf.mp3'),(31,'111','2024-03-17','1_ltvo5qxw.mp3');
 /*!40000 ALTER TABLE `listening` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +54,7 @@ CREATE TABLE `listening_question` (
   `content` text,
   `answer` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `listening_question` (
 
 LOCK TABLES `listening_question` WRITE;
 /*!40000 ALTER TABLE `listening_question` DISABLE KEYS */;
-INSERT INTO `listening_question` VALUES (21,7,'','a'),(22,7,'b','c'),(23,7,'d','e'),(24,7,'','f'),(25,8,'A','C'),(26,9,'A','C'),(74,15,'AAA','BBB'),(75,15,'CCC DDD',NULL);
+INSERT INTO `listening_question` VALUES (94,29,'','111'),(99,28,'','111'),(100,30,'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST','TEST'),(101,30,'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST','TEST'),(102,30,'TEST TEST TEST TEST TEST TEST TEST TEST','TEST'),(103,30,'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST','TEST'),(104,30,'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST',NULL),(105,31,'1.AAA','BBB'),(106,31,'CCC DDD\n2.AAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC','CCCAAA'),(107,31,'','CCCAAA'),(108,31,'CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCCAAA CCC CCC',NULL);
 /*!40000 ALTER TABLE `listening_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `reading_question` (
   `answer` varchar(100) DEFAULT NULL,
   `sort_num` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `reading_question` (
 
 LOCK TABLES `reading_question` WRITE;
 /*!40000 ALTER TABLE `reading_question` DISABLE KEYS */;
-INSERT INTO `reading_question` VALUES (5,1,'2','2',NULL),(15,16,'2','2',NULL),(16,17,'2','2',NULL),(18,19,'2','2',NULL),(19,20,'2','2',NULL),(24,23,'as break, we flew to Rhow to take c','1',NULL),(25,23,'as broict. I learn how to take c','3',NULL),(26,23,'as break, wo te pendent. I learn how to take c','0',NULL),(27,23,'as break, we. She pendent. I learn how to take c','2',NULL),(28,25,'1','1',NULL),(29,27,'QQQQQQQQQQQQQ','0',NULL),(30,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','3',NULL),(31,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','1',NULL),(32,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','0',NULL),(34,30,'as break, we flew to Rhow to take c','1',NULL),(35,30,'as broict. I learn how to take c','3',NULL),(36,30,'as break, wo te pendent. I learn how to take c','0',NULL),(37,30,'as break, we. She pendent. I learn how to take c','2',NULL),(38,31,'as break, we flew to Rhow to take c','1',NULL),(39,31,'as broict. I learn how to take c','3',NULL),(40,31,'as break, wo te pendent. I learn how to take c','0',NULL),(41,31,'as break, we. She pendent. I learn how to take c','2',NULL),(42,32,'2','222',NULL),(43,NULL,'2','22222',NULL),(44,NULL,'2','222222',NULL),(45,NULL,'2','222222',NULL),(46,33,'2','22222',NULL),(50,26,'33333','3333',NULL),(51,18,'2','2',NULL),(53,34,'1','1',NULL),(54,35,'fwfwfwfwfwfwfwf','fwfwfwfwfwfwfwf',NULL),(55,35,'fwfwfwfwfwfwfwf','fwfwfwfwfwfwfwf',NULL),(57,15,'2','22',NULL),(58,15,'1111111111111111111111111111111111111111111111111111111111111','1111111111111111111111111111111111111111111111111111111111111',NULL);
+INSERT INTO `reading_question` VALUES (5,1,'2','2',NULL),(15,16,'2','2',NULL),(16,17,'2','2',NULL),(18,19,'2','2',NULL),(19,20,'2','2',NULL),(24,23,'as break, we flew to Rhow to take c','1',NULL),(25,23,'as broict. I learn how to take c','3',NULL),(26,23,'as break, wo te pendent. I learn how to take c','0',NULL),(27,23,'as break, we. She pendent. I learn how to take c','2',NULL),(28,25,'1','1',NULL),(29,27,'QQQQQQQQQQQQQ','0',NULL),(30,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','3',NULL),(31,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','1',NULL),(32,28,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS','0',NULL),(34,30,'as break, we flew to Rhow to take c','1',NULL),(35,30,'as broict. I learn how to take c','3',NULL),(36,30,'as break, wo te pendent. I learn how to take c','0',NULL),(37,30,'as break, we. She pendent. I learn how to take c','2',NULL),(38,31,'as break, we flew to Rhow to take c','1',NULL),(39,31,'as broict. I learn how to take c','3',NULL),(40,31,'as break, wo te pendent. I learn how to take c','0',NULL),(41,31,'as break, we. She pendent. I learn how to take c','2',NULL),(42,32,'2','222',NULL),(43,NULL,'2','22222',NULL),(44,NULL,'2','222222',NULL),(45,NULL,'2','222222',NULL),(46,33,'2','22222',NULL),(50,26,'33333','3333',NULL),(51,18,'2','2',NULL),(53,34,'1','1',NULL),(54,35,'fwfwfwfwfwfwfwf','fwfwfwfwfwfwfwf',NULL),(55,35,'fwfwfwfwfwfwfwf','fwfwfwfwfwfwfwf',NULL),(59,15,'2','22',NULL),(60,15,'1111111111111111111111111111111111111111111111111111111111111','1111111111111111111111111111111111111111111111111111111111111',NULL);
 /*!40000 ALTER TABLE `reading_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +133,7 @@ CREATE TABLE `reading_question_option` (
   `content` varchar(300) DEFAULT NULL,
   `sort_num` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `reading_question_option` (
 
 LOCK TABLES `reading_question_option` WRITE;
 /*!40000 ALTER TABLE `reading_question_option` DISABLE KEYS */;
-INSERT INTO `reading_question_option` VALUES (12,15,'3',NULL),(13,16,'3',NULL),(15,18,'3',NULL),(16,19,'3',NULL),(33,24,'icult choices she had to make. She needed t',NULL),(34,24,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(35,24,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(36,24,'icult choiceslehe had to make. She needed t',NULL),(37,25,'icult choices she had to make. She needed t',NULL),(38,25,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(39,25,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(40,25,'icult choices sed to She needed t',NULL),(41,26,'icult choices she had to make. She needed t',NULL),(42,26,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(43,26,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(44,26,'icult choices so make. She needed t',NULL),(45,27,'icult choices she had to make. She needed t',NULL),(46,27,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(47,27,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(48,27,'icult choe had to make. She needed t',NULL),(49,28,'1',NULL),(50,29,'QQQQQQQQQQQQQ',NULL),(51,30,'1飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(52,30,'1飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(53,30,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(54,30,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(55,31,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(56,31,'1111111111111111',NULL),(57,32,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(58,32,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(60,34,'icult choices she had to make. She needed t',NULL),(61,34,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(62,34,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(63,34,'icult choiceslehe had to make. She needed t',NULL),(64,35,'icult choices she had to make. She needed t',NULL),(65,35,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(66,35,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(67,35,'icult choices sed to She needed t',NULL),(68,36,'icult choices she had to make. She needed t',NULL),(69,36,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(70,36,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(71,36,'icult choices so make. She needed t',NULL),(72,37,'icult choices she had to make. She needed t',NULL),(73,37,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(74,37,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(75,37,'icult choe had to make. She needed t',NULL),(76,38,'icult choices she had to make. She needed t',NULL),(77,38,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(78,38,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(79,38,'icult choiceslehe had to make. She needed t',NULL),(80,39,'icult choices she had to make. She needed t',NULL),(81,39,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(82,39,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(83,39,'icult choices sed to She needed t',NULL),(84,40,'icult choices she had to make. She needed t',NULL),(85,40,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(86,40,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(87,40,'icult choices so make. She needed t',NULL),(88,41,'icult choices she had to make. She needed t',NULL),(89,41,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(90,41,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(91,41,'icult choe had to make. She needed t',NULL),(92,42,'222',NULL),(93,46,'22222',NULL),(97,50,'33333',NULL),(98,51,'3',NULL),(100,53,'1',NULL),(101,54,'fwfwfwfwfwfwfwf',NULL),(102,55,'fwfwfwfwfwfwfwf',NULL),(105,57,'3',NULL),(106,57,'3333',NULL),(107,58,'1111111111111111111111111111111111111111111111111111111111111',NULL);
+INSERT INTO `reading_question_option` VALUES (12,15,'3',NULL),(13,16,'3',NULL),(15,18,'3',NULL),(16,19,'3',NULL),(33,24,'icult choices she had to make. She needed t',NULL),(34,24,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(35,24,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(36,24,'icult choiceslehe had to make. She needed t',NULL),(37,25,'icult choices she had to make. She needed t',NULL),(38,25,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(39,25,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(40,25,'icult choices sed to She needed t',NULL),(41,26,'icult choices she had to make. She needed t',NULL),(42,26,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(43,26,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(44,26,'icult choices so make. She needed t',NULL),(45,27,'icult choices she had to make. She needed t',NULL),(46,27,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(47,27,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(48,27,'icult choe had to make. She needed t',NULL),(49,28,'1',NULL),(50,29,'QQQQQQQQQQQQQ',NULL),(51,30,'1飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(52,30,'1飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(53,30,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(54,30,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(55,31,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(56,31,'1111111111111111',NULL),(57,32,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(58,32,'飒飒飒试试少时诵诗书少时诵诗书SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',NULL),(60,34,'icult choices she had to make. She needed t',NULL),(61,34,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(62,34,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(63,34,'icult choiceslehe had to make. She needed t',NULL),(64,35,'icult choices she had to make. She needed t',NULL),(65,35,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(66,35,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(67,35,'icult choices sed to She needed t',NULL),(68,36,'icult choices she had to make. She needed t',NULL),(69,36,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(70,36,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(71,36,'icult choices so make. She needed t',NULL),(72,37,'icult choices she had to make. She needed t',NULL),(73,37,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(74,37,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(75,37,'icult choe had to make. She needed t',NULL),(76,38,'icult choices she had to make. She needed t',NULL),(77,38,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(78,38,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(79,38,'icult choiceslehe had to make. She needed t',NULL),(80,39,'icult choices she had to make. She needed t',NULL),(81,39,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(82,39,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(83,39,'icult choices sed to She needed t',NULL),(84,40,'icult choices she had to make. She needed t',NULL),(85,40,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(86,40,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(87,40,'icult choices so make. She needed t',NULL),(88,41,'icult choices she had to make. She needed t',NULL),(89,41,'icult choices ed to te pendent. I leed to te pendent. I leshe had to make. She needed t',NULL),(90,41,'icult choices sed to te pendent. I lehe had to make. She needed t',NULL),(91,41,'icult choe had to make. She needed t',NULL),(92,42,'222',NULL),(93,46,'22222',NULL),(97,50,'33333',NULL),(98,51,'3',NULL),(100,53,'1',NULL),(101,54,'fwfwfwfwfwfwfwf',NULL),(102,55,'fwfwfwfwfwfwfwf',NULL),(108,59,'3',NULL),(109,59,'3333',NULL),(110,60,'1111111111111111111111111111111111111111111111111111111111111',NULL);
 /*!40000 ALTER TABLE `reading_question_option` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,12 +154,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `admin` int DEFAULT NULL,
+  `is_admin` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +171,64 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (2,'admin123','123456',0),(4,'admin','111',1),(5,'1','1',0),(6,'12','2',0),(7,'1111111','1111111',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user_listening_record`
+--
+
+DROP TABLE IF EXISTS `user_listening_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_listening_record` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `listening_id` bigint NOT NULL,
+  `uid` bigint NOT NULL,
+  `record` varchar(300) NOT NULL,
+  `answer` varchar(300) NOT NULL,
+  `is_correct` int NOT NULL,
+  `create_time` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_listening_record`
+--
+
+LOCK TABLES `user_listening_record` WRITE;
+/*!40000 ALTER TABLE `user_listening_record` DISABLE KEYS */;
+INSERT INTO `user_listening_record` VALUES (1,28,5,'www','111',0,'2024-03-17'),(2,30,5,'AAA','TEST',0,'2024-03-17'),(3,30,5,'AA','TEST',0,'2024-03-17'),(4,30,5,'TEST','TEST',1,'2024-03-17'),(5,30,5,'AAA','TEST',0,'2024-03-17'),(6,31,4,'AA','BBB',0,'2024-03-17'),(7,31,4,'AAA','CCCAAA',0,'2024-03-17'),(8,31,4,'AAA','CCCAAA',0,'2024-03-17');
+/*!40000 ALTER TABLE `user_listening_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_reading_record`
+--
+
+DROP TABLE IF EXISTS `user_reading_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_reading_record` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `reading_id` bigint NOT NULL,
+  `uid` bigint NOT NULL,
+  `record` varchar(300) NOT NULL,
+  `answer` varchar(300) NOT NULL,
+  `is_correct` int NOT NULL,
+  `create_time` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_reading_record`
+--
+
+LOCK TABLES `user_reading_record` WRITE;
+/*!40000 ALTER TABLE `user_reading_record` DISABLE KEYS */;
+INSERT INTO `user_reading_record` VALUES (1,15,4,'1','22',0,'2024-03-17'),(2,15,4,'0','1111111111111111111111111111111111111111111111111111111111111',0,'2024-03-17'),(3,20,4,'0','2',0,'2024-03-17'),(4,23,4,'2','1',0,'2024-03-17'),(5,23,4,'0','3',0,'2024-03-17'),(6,23,4,'0','0',1,'2024-03-17'),(7,23,4,'0','2',0,'2024-03-17'),(8,31,4,'0','1',0,'2024-03-18'),(9,31,4,'1','3',0,'2024-03-18'),(10,31,4,'2','0',0,'2024-03-18'),(11,31,4,'0','2',0,'2024-03-18'),(12,17,4,'0','2',0,'2024-03-18');
+/*!40000 ALTER TABLE `user_reading_record` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -181,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-16 13:46:37
+-- Dump completed on 2024-03-18 11:40:44
