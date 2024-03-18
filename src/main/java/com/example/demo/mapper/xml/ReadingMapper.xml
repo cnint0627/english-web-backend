@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.ReadingMapper">
-<!--    <insert id="addReading" parameterType="com.example.demo.pojo.Reading">-->
+<!--    <insert id="addReading" parameterType="com.example.demo.pojo.reading.Reading">-->
 <!--        insert into reading_comprehension-->
 <!--        (title,content,question)-->
 <!--        values(#{title},#{content},-->
@@ -63,7 +63,7 @@
         left join reading_question_option o
         on q.id = o.question_id
         left join user_reading_record u
-        on r.id = u.reading_id
+        on r.id = u.reading_id and u.uid = #{uid}
         where r.id = #{id}
         order by oid,rid
     </select>

@@ -17,7 +17,7 @@ mybatis:
   # 指定实体类
   type-aliases-package: com.example.demo.pojo
   # 指定mapper映射配置包
-  mapper-locations: classpath*:com/example/demo/mapper/*.xml
+  mapper-locations: classpath*:com/example/demo/mapper/xml/*.xml
   # 指定handler的位置
   type-handlers-package: com.example.demo.handler
 

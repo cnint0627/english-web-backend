@@ -1,8 +1,8 @@
-package com.example.demo.pojo;
+package com.example.demo.pojo.reading;
 
+import com.example.demo.pojo.QuestionRecord;
 import lombok.Data;
 
-import java.sql.Date;
 import java.util.List;
 
 @Data

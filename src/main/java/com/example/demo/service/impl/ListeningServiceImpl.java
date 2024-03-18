@@ -2,17 +2,20 @@ package com.example.demo.service.impl;
 
 import com.example.demo.mapper.ListeningMapper;
 import com.example.demo.pojo.*;
+import com.example.demo.pojo.listening.Listening;
+import com.example.demo.pojo.listening.ListeningBlank;
 import com.example.demo.service.ListeningService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class ListeningServiceImpl implements ListeningService {
     @Autowired
     private ListeningMapper listeningMapper;
@@ -37,22 +40,27 @@ public class ListeningServiceImpl implements ListeningService {
     }
 
     @Override
-    public Listening getById(Long id){
-        Listening listening=listeningMapper.getAllById(id);
-        for(ListeningQuestion listeningQuestion: listening.getQuestions()){
-            if(listeningQuestion.getAnswer()!=null){
-                listeningQuestion.setHasBlank(1);
+    public Listening getById(Long id,Long uid){
+        Listening listening=listeningMapper.getAllById(id,uid);
+        for(ListeningBlank listeningBlank: listening.getBlanks()){
+            if(listeningBlank.getAnswer()!=null){
+                // 返回时保留答案的换行符，使页面能正常渲染换行
+                if(listeningBlank.getAnswer().endsWith("\n")){
+                    listeningBlank.setAnswer("\n");
+                }else{
+                    listeningBlank.setAnswer(null);
+                }
+                listeningBlank.setHasBlank(1);
             }else{
-                listeningQuestion.setHasBlank(0);
+                listeningBlank.setHasBlank(0);
             }
-            listeningQuestion.setAnswer(null);
         }
         return listening;
     }
 
     @Override
     public Listening getAllById(Long id){
-        return listeningMapper.getAllById(id);
+        return listeningMapper.getAllById(id, 4L);
     }
 
     @Override
@@ -72,11 +80,11 @@ public class ListeningServiceImpl implements ListeningService {
     @Override
     public void add(Listening listening){
         listeningMapper.addListening(listening);
-        List<ListeningQuestion> listeningQuestionList=listening.getQuestions();
-        for(ListeningQuestion listeningQuestion: listeningQuestionList){
-            listeningQuestion.setListeningId(listening.getId());
+        List<ListeningBlank> listeningBlankList=listening.getBlanks();
+        for(ListeningBlank listeningBlank: listeningBlankList){
+            listeningBlank.setListeningId(listening.getId());
         }
-        listeningMapper.addListeningQuestion(listeningQuestionList);
+        listeningMapper.addListeningBlank(listeningBlankList);
     }
 
     @Override
@@ -85,11 +93,11 @@ public class ListeningServiceImpl implements ListeningService {
         this.delete(listening.getId());
         // 把原来的id保留
         listeningMapper.editListening(listening);
-        List<ListeningQuestion> listeningQuestionList=listening.getQuestions();
-        for(ListeningQuestion listeningQuestion: listeningQuestionList){
-            listeningQuestion.setListeningId(listening.getId());
+        List<ListeningBlank> listeningBlankList=listening.getBlanks();
+        for(ListeningBlank listeningBlank: listeningBlankList){
+            listeningBlank.setListeningId(listening.getId());
         }
-        listeningMapper.addListeningQuestion(listeningQuestionList);
+        listeningMapper.addListeningBlank(listeningBlankList);
     }
 
     @Override

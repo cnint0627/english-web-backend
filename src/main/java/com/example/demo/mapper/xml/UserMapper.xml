@@ -16,4 +16,12 @@
         where u.uid = #{id}
         group by l.id
     </select>
+
+    <select id="getWritingRecord">
+        select w.id,w.title,w.create_time as createTime from writing w
+        left join user_writing_record u
+        on w.id = u.writing_id
+        where u.uid = #{id}
+        group by w.id
+    </select>
 </mapper>

@@ -1,11 +1,10 @@
 package com.example.demo.mapper;
 
 import com.example.demo.pojo.QuestionRecord;
-import com.example.demo.pojo.Reading;
-import com.example.demo.pojo.ReadingQuestion;
-import com.example.demo.pojo.ReadingQuestionOption;
+import com.example.demo.pojo.reading.Reading;
+import com.example.demo.pojo.reading.ReadingQuestion;
+import com.example.demo.pojo.reading.ReadingQuestionOption;
 import org.apache.ibatis.annotations.*;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;

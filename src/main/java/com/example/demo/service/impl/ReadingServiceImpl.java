@@ -1,25 +1,16 @@
 package com.example.demo.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.example.demo.mapper.ReadingMapper;
 import com.example.demo.pojo.QuestionRecord;
-import com.example.demo.pojo.Reading;
-import com.example.demo.pojo.ReadingQuestion;
-import com.example.demo.pojo.ReadingQuestionOption;
+import com.example.demo.pojo.reading.Reading;
+import com.example.demo.pojo.reading.ReadingQuestion;
+import com.example.demo.pojo.reading.ReadingQuestionOption;
 import com.example.demo.service.ReadingService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.sql.Array;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service

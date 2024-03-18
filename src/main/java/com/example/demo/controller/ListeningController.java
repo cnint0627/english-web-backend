@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.pojo.Listening;
+import com.example.demo.pojo.listening.Listening;
 import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Result;
 import com.example.demo.service.ListeningService;
@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/listening")
@@ -53,8 +51,10 @@ public class ListeningController {
      * @return 指定id听力除答案外的全部信息
      */
     @GetMapping("/getById")
-    public Result getById(@RequestParam Long id){
-        Listening listening=listeningService.getById(id);
+    public Result getById(@RequestParam Long id,HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
+        Listening listening=listeningService.getById(id,uid);
         if(listening!=null){
             return Result.success(listening);
         }
@@ -101,7 +101,8 @@ public class ListeningController {
             questionRecord.setUid(uid);
             questionRecord.setAnswer(answerList.get(index));
             questionRecord.setRecord(records.get(index));
-            questionRecord.setIsCorrect(questionRecord.getAnswer().equals(questionRecord.getRecord())?1:0);
+            // 比较答案的时候要把末尾的\n去掉
+            questionRecord.setIsCorrect(questionRecord.getAnswer().trim().equals(questionRecord.getRecord())?1:0);
             questionRecordList.add(questionRecord);
         }
         listeningService.submitAnswer(questionRecordList);
@@ -128,7 +129,7 @@ public class ListeningController {
      */
     @PostMapping("/edit")
     public Result edit(@RequestBody Listening listening){
-        if(listeningService.getById(listening.getId())!=null) {
+        if(listeningService.getById(listening.getId(),null)!=null) {
             listeningService.edit(listening);
             return Result.success();
         }
@@ -144,7 +145,7 @@ public class ListeningController {
      */
     @PostMapping("/delete")
     public Result delete(@RequestParam Long id){
-        Listening listening=listeningService.getById(id);
+        Listening listening=listeningService.getById(id,null);
         if(listening!=null){
             // 该id听力存在，删除
             listeningService.delete(id);

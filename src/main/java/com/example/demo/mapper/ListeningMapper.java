@@ -1,7 +1,7 @@
 package com.example.demo.mapper;
 
-import com.example.demo.pojo.Listening;
-import com.example.demo.pojo.ListeningQuestion;
+import com.example.demo.pojo.listening.Listening;
+import com.example.demo.pojo.listening.ListeningBlank;
 import com.example.demo.pojo.QuestionRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -22,7 +22,7 @@ public interface ListeningMapper {
 
 //    public Listening getById(Long id);
 
-    public Listening getAllById(Long id);
+    public Listening getAllById(Long id,Long uid);
 
     public List<String> getAnswerById(Long id);
 
@@ -30,7 +30,7 @@ public interface ListeningMapper {
 
     public void addListening(Listening listening);
 
-    public void addListeningQuestion(List<ListeningQuestion> listeningQuestionList);
+    public void addListeningBlank(List<ListeningBlank> listeningBlankList);
 
     public void editListening(Listening listening);
 

@@ -1,5 +1,6 @@
-package com.example.demo.pojo;
+package com.example.demo.pojo.listening;
 
+import com.example.demo.pojo.QuestionRecord;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public class Listening {
     private String createTime;
     // 听力音频路径
     private String audioPath;
+    // 听力下的填空列表
+    private List<ListeningBlank> blanks;
     // 听力下的题目列表
     private List<ListeningQuestion> questions;
     // 用户回答记录

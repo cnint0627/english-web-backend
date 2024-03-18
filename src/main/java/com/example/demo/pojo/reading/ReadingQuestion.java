@@ -1,4 +1,4 @@
-package com.example.demo.pojo;
+package com.example.demo.pojo.reading;
 
 import lombok.Data;
 

@@ -51,4 +51,14 @@ public class UserController {
         return Result.success(userService.getListeningRecord(uid));
     }
 
+    /**
+     * 查看做过的写作历史记录
+     * @return 获取结果
+     */
+    @GetMapping("/getRecord/writing")
+    public Result getWritingRecord(HttpServletRequest request){
+        Long uid=userService.getByToken(request).getId();
+        return Result.success(userService.getWritingRecord(uid));
+    }
+
 }

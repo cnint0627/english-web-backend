@@ -39,6 +39,7 @@ public class LoginController {
             Map<String,Object> claims=new HashMap<>();
             claims.put("id",userLogin.getId());
             claims.put("username",userLogin.getUsername());
+            claims.put("createTime",userLogin.getCreateTime());
             claims.put("isAdmin",userLogin.getIsAdmin());
             // 使用jwt工具类生成身份令牌
             String token= JwtUtils.generateJwt(claims);

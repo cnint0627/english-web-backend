@@ -13,4 +13,6 @@ public class User {
     private String openid;
     // 该账号是否是管理员
     private int isAdmin;
+    // 创建时间
+    private String createTime;
 }

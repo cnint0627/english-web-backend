@@ -12,7 +12,7 @@
             property: 集合名称
             ofType: 当前集合中的数据类型
         -->
-        <collection property="questions" ofType="ListeningQuestion">
+        <collection property="blanks" ofType="ListeningBlank">
             <id property="id" column="qid"></id>
             <result property="listeningId" column="listening_id"></result>
             <result property="content" column="content"></result>
@@ -64,7 +64,7 @@
                  left join listening_question q
                            on l.id = q.listening_id
                  left join user_listening_record u
-                           on l.id = u.listening_id
+                           on l.id = u.listening_id and u.uid = #{uid}
         where l.id = #{id}
         order by qid,rid
     </select>
@@ -92,11 +92,11 @@
         (title,audio_path,create_time)
         values(#{title},#{audioPath},curdate())
     </insert>
-    <insert id="addListeningQuestion">
+    <insert id="addListeningBlank">
         insert into listening_question
         (listening_id,content,answer)
         values
-        <foreach item="item" index="index" collection="listeningQuestionList" separator=",">
+        <foreach item="item" index="index" collection="listeningBlankList" separator=",">
             (#{item.listeningId},#{item.content},#{item.answer})
         </foreach>
     </insert>

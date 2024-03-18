@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.pojo.QuestionRecord;
-import com.example.demo.pojo.Reading;
+import com.example.demo.pojo.reading.Reading;
 import com.example.demo.pojo.Result;
-import com.example.demo.pojo.User;
 import com.example.demo.service.ReadingService;
 import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController

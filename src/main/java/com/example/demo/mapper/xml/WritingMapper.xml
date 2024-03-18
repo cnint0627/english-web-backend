@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.WritingMapper">
+    <resultMap id="writingMap" type="Writing">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="create_time" property="createTime"></result>
+
+        <!--配置集合信息
+            property: 集合名称
+            ofType: 当前集合中的数据类型
+        -->
+        <collection property="records" ofType="QuestionRecord">
+            <id property="id" column="rid"></id>
+            <result property="textId" column="rwriting_id"></result>
+            <result property="uid" column="uid"></result>
+            <result property="record" column="record"></result>
+            <result property="createTime" column="rcreate_time"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="writingMap">
+        select w.id,
+               w.title,
+               w.content,
+               w.create_time,
+               u.id as rid,
+               u.writing_id as rwriting_id,
+               u.record,
+               u.create_time as rcreate_time
+        from writing w
+                 left join user_writing_record u
+                           on w.id = u.writing_id and u.uid = #{uid}
+        where w.id = #{id}
+        order by rid
+    </select>
+    <insert id="submitAnswer">
+        insert into user_writing_record
+            (writing_id,uid,record,create_time)
+        values
+        <foreach item="item" index="index" collection="questionRecordList" separator=",">
+            (#{item.textId},#{item.uid},#{item.record},curdate())
+        </foreach>
+    </insert>
+</mapper>

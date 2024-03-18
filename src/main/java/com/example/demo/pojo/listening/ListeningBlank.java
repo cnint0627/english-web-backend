@@ -1,9 +1,9 @@
-package com.example.demo.pojo;
+package com.example.demo.pojo.listening;
 
 import lombok.Data;
 
 @Data
-public class ListeningQuestion {
+public class ListeningBlank {
     private Long id;
     // 所属的听力id
     private Long listeningId;
