@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import com.example.demo.pojo.Listening;
 import com.example.demo.pojo.ListeningQuestion;
+import com.example.demo.pojo.QuestionRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
@@ -24,6 +25,8 @@ public interface ListeningMapper {
     public Listening getAllById(Long id);
 
     public List<String> getAnswerById(Long id);
+
+    public void submitAnswer(List<QuestionRecord> questionRecordList);
 
     public void addListening(Listening listening);
 

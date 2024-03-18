@@ -18,6 +18,15 @@
             <result property="content" column="content"></result>
             <result property="answer" column="answer"></result>
         </collection>
+        <collection property="records" ofType="QuestionRecord">
+            <id property="id" column="rid"></id>
+            <result property="textId" column="rreading_id"></result>
+            <result property="uid" column="uid"></result>
+            <result property="record" column="record"></result>
+            <result property="answer" column="ranswer"></result>
+            <result property="isCorrect" column="is_correct"></result>
+            <result property="createTime" column="rcreate_time"></result>
+        </collection>
     </resultMap>
 
     <select id="getById" resultMap="listeningMap">
@@ -44,12 +53,20 @@
                q.id as qid,
                q.content as content,
                q.answer,
-               q.listening_id
+               q.listening_id,
+               u.id as rid,
+               u.listening_id as rlistening_id,
+               u.record,
+               u.answer as ranswer,
+               u.is_correct,
+               u.create_time as rcreate_time
         from listening l
                  left join listening_question q
                            on l.id = q.listening_id
+                 left join user_listening_record u
+                           on l.id = u.listening_id
         where l.id = #{id}
-        order by qid
+        order by qid,rid
     </select>
 
     <select id="getAnswerById">
@@ -60,6 +77,15 @@
         where l.id = #{id}
         order by q.id
     </select>
+
+    <insert id="submitAnswer">
+        insert into user_listening_record
+        (listening_id,uid,record,answer,is_correct,create_time)
+        values
+        <foreach item="item" index="index" collection="questionRecordList" separator=",">
+            (#{item.textId},#{item.uid},#{item.record},#{item.answer},#{item.isCorrect},curdate())
+        </foreach>
+    </insert>
 
     <insert id="addListening" parameterType="listening" useGeneratedKeys="true" keyProperty="id">
         insert into listening

@@ -35,10 +35,20 @@ public class UserController {
      * 查看做过的阅读历史记录
      * @return 获取结果
      */
-    @GetMapping("/getReadingRecord")
+    @GetMapping("/getRecord/reading")
     public Result getReadingRecord(HttpServletRequest request){
         Long uid=userService.getByToken(request).getId();
         return Result.success(userService.getReadingRecord(uid));
+    }
+
+    /**
+     * 查看做过的听力历史记录
+     * @return 获取结果
+     */
+    @GetMapping("/getRecord/listening")
+    public Result getListeningRecord(HttpServletRequest request){
+        Long uid=userService.getByToken(request).getId();
+        return Result.success(userService.getListeningRecord(uid));
     }
 
 }

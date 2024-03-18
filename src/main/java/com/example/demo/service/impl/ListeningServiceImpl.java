@@ -65,6 +65,11 @@ public class ListeningServiceImpl implements ListeningService {
     }
 
     @Override
+    public void submitAnswer(List<QuestionRecord> questionRecordList){
+        listeningMapper.submitAnswer(questionRecordList);
+    }
+
+    @Override
     public void add(Listening listening){
         listeningMapper.addListening(listening);
         List<ListeningQuestion> listeningQuestionList=listening.getQuestions();

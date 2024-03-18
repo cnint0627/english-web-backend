@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.pojo.Listening;
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Reading;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface ListeningService {
     public Listening getById(Long id);
     public Listening getAllById(Long id);
     public List<String> getAnswerById(Long id);
+    public void submitAnswer(List<QuestionRecord> questionRecordList);
     public void add(Listening listening);
     public void edit(Listening listening);
     public void delete(Long id);

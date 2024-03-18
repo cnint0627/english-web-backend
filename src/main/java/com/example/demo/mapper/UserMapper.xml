@@ -8,4 +8,12 @@
         where u.uid = #{id}
         group by r.id
     </select>
+
+    <select id="getListeningRecord">
+        select l.id,l.title,l.create_time as createTime from listening l
+        left join user_listening_record u
+        on l.id = u.listening_id
+        where u.uid = #{id}
+        group by l.id
+    </select>
 </mapper>

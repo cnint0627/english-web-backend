@@ -5,6 +5,8 @@ import com.example.demo.pojo.Listening;
 import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Result;
 import com.example.demo.service.ListeningService;
+import com.example.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,10 @@ public class ListeningController {
     @Autowired
     private ListeningService listeningService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private FileController fileController;
+
 
     /**
      * 获取所有听力的简略信息（id，标题）
@@ -78,7 +83,9 @@ public class ListeningController {
      * @return 答题结果
      */
     @PostMapping("/submitAnswer")
-    public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records){
+    public Result submitAnswer(@RequestParam Long id, @RequestBody List<String> records, HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
         List<String> answerList=listeningService.getAnswerById(id);
         if(answerList.isEmpty()){
             return Result.error("听力id不存在");
@@ -91,11 +98,13 @@ public class ListeningController {
             // 对用户答案进行评判
             QuestionRecord questionRecord = new QuestionRecord();
             questionRecord.setTextId(id);
+            questionRecord.setUid(uid);
             questionRecord.setAnswer(answerList.get(index));
             questionRecord.setRecord(records.get(index));
             questionRecord.setIsCorrect(questionRecord.getAnswer().equals(questionRecord.getRecord())?1:0);
             questionRecordList.add(questionRecord);
         }
+        listeningService.submitAnswer(questionRecordList);
         return Result.success(questionRecordList);
     }
 

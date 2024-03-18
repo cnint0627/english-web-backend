@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.pojo.Listening;
 import com.example.demo.pojo.Reading;
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
@@ -35,5 +36,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Reading> getReadingRecord(Long id){
         return userMapper.getReadingRecord(id);
+    }
+    @Override
+    public List<Listening> getListeningRecord(Long id){
+        return userMapper.getListeningRecord(id);
     }
 }
