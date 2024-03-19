@@ -55,6 +55,9 @@ public class ReadingServiceImpl implements ReadingService {
 
     @Override
     public void submitAnswer(List<QuestionRecord> questionRecordList){
+        // 先清除原有记录
+        readingMapper.deleteRecord(questionRecordList.getFirst().getId(), questionRecordList.getFirst().getUid());
+        // 再添加记录
         readingMapper.submitAnswer(questionRecordList);
     }
 

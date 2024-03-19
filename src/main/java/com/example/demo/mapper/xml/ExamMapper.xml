@@ -20,6 +20,11 @@
         </collection>
     </resultMap>
 
+    <select id="page" resultMap="examMap">
+        select e.id,e.title,e.create_time,u.uid from exam e
+        left join user_exam_record u on e.id = u.exam_id and u.uid = #{uid}
+    </select>
+
     <select id="getById" resultMap="examMap">
         select e.id,
                e.title,

@@ -56,7 +56,7 @@
                q.id as qid,
                q.listening_id as qlistening_id,
                q.title as qtitle,
---                q.answer as qanswer,
+               q.answer as qanswer,
                q.sort_num as qsort_num,
                o.id as oid,
                o.content as ocontent,

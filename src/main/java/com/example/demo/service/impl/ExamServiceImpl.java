@@ -28,7 +28,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Map<String,Object> page(int pageNum, int pageSize){
+    public Map<String,Object> page(int pageNum, int pageSize, Long uid){
         int count = examMapper.count();  //总条数
         //计算出：共有多少页、这页的偏移量offset是多少
         int pageNums = (count / pageSize) + 1;  //共有多少页
@@ -36,9 +36,20 @@ public class ExamServiceImpl implements ExamService {
 
         RowBounds rowBounds = new RowBounds(offset,pageSize);
         Map<String,Object> result=new HashMap<>();
-        result.put("records",examMapper.page(rowBounds));
+        List<Exam> examList=examMapper.page(rowBounds,uid);
+        for(Exam exam:examList){
+            if(exam.getIsCompleted()>0){
+                exam.setIsCompleted(1);
+            }
+        }
+        result.put("records",examList);
         result.put("total",count);
         return result;
+    }
+
+    @Override
+    public Map<String,Object> page(int pageNum,int pageSize){
+        return new HashMap<>();
     }
 
     @Override

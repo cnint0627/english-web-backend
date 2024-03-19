@@ -19,8 +19,7 @@ public interface ExamMapper {
     @Select("select id,title,create_time as createTime from exam")
     public List<Exam> list();
 
-    @Select("select id,title,create_time as createTime from exam")
-    public List<Exam> page(RowBounds rowBounds);
+    public List<Exam> page(RowBounds rowBounds,Long uid);
 
     @Select("select count(*) from exam")
     public int count();

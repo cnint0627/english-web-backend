@@ -107,6 +107,13 @@
         </foreach>
     </insert>
 
+    <delete id="deleteRecord">
+        delete u
+        from user_reading_record u
+        left join reading r on r.id = u.reading_id
+        where u.uid = #{uid} and u.reading_id = #{id}
+    </delete>
+
     <insert id="addReading" parameterType="reading" useGeneratedKeys="true" keyProperty="id">
         insert into reading
         (title,content,create_time)

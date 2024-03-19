@@ -27,6 +27,8 @@ public interface ReadingMapper {
 
     public void submitAnswer(List<QuestionRecord> questionRecordList);
 
+    public void deleteRecord(Long id, Long uid);
+
     public void addReading(Reading reading);
 
     public void addReadingQuestion(List<ReadingQuestion> readingQuestionList);

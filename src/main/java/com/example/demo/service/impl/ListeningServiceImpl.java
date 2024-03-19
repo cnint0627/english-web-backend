@@ -60,6 +60,9 @@ public class ListeningServiceImpl implements ListeningService {
                 listeningBlank.setHasBlank(0);
             }
         }
+        for(ListeningQuestion listeningQuestion:listening.getQuestions()){
+            listeningQuestion.setAnswer(null);
+        }
         return listening;
     }
 
@@ -124,6 +127,23 @@ public class ListeningServiceImpl implements ListeningService {
             listeningBlank.setListeningId(listening.getId());
         }
         listeningMapper.addListeningBlank(listeningBlankList);
+
+        List<ListeningQuestion> listeningQuestionList=listening.getQuestions();
+        if(!listeningQuestionList.isEmpty()) {
+            // 听力材料的选择题部分
+            for (ListeningQuestion listeningQuestion : listeningQuestionList) {
+                listeningQuestion.setListeningId(listening.getId());
+            }
+            listeningMapper.addListeningQuestion(listeningQuestionList);
+            List<ListeningQuestionOption> listeningQuestionOptionList = new ArrayList<>();
+            for (ListeningQuestion listeningQuestion : listeningQuestionList) {
+                for (ListeningQuestionOption listeningQuestionOption : listeningQuestion.getOptions()) {
+                    listeningQuestionOption.setQuestionId(listeningQuestion.getId());
+                    listeningQuestionOptionList.add(listeningQuestionOption);
+                }
+            }
+            listeningMapper.addListeningQuestionOption(listeningQuestionOptionList);
+        }
     }
 
     @Override

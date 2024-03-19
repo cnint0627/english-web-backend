@@ -37,8 +37,10 @@ public class ExamController {
      * @return 包含组卷信息的列表和组卷总个数
      */
     @GetMapping("/page")
-    public Result page(@RequestParam int pageNum, @RequestParam int pageSize){
-        return Result.success(examService.page(pageNum,pageSize));
+    public Result page(@RequestParam int pageNum, @RequestParam int pageSize, HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
+        return Result.success(examService.page(pageNum,pageSize,uid));
     }
 
     /**
