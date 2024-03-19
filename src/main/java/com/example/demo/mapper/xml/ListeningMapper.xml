@@ -144,9 +144,11 @@
     </insert>
 
     <delete id="delete">
-        delete l,q
+        delete l,b,q,o
         from listening l
-        left join listening_blank q on l.id = q.listening_id
+        left join listening_blank b on l.id = b.listening_id
+               left join listening_question q on l.id = q.listening_id
+               left join listening_question_option o on q.id = o.question_id
         where l.id = #{id}
     </delete>
 </mapper>

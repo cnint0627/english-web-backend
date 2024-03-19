@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ExamMapper">
+    <resultMap id="examMap" type="Exam">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="create_time" property="createTime"></result>
+
+        <!--配置集合信息
+            property: 集合名称
+            ofType: 当前集合中的数据类型
+        -->
+        <collection property="materials" ofType="ExamMaterial">
+            <id property="id" column="mid"></id>
+            <result property="examId" column="exam_id"></result>
+            <result property="materialId" column="material_id"></result>
+            <result property="type" column="type"></result>
+            <result property="sortNum" column="sort_num"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="examMap">
+        select e.id,
+               e.title,
+               e.create_time,
+               m.id as mid,
+               m.exam_id,
+               m.material_id,
+               m.type,
+               m.sort_num
+        from exam e
+                 left join exam_material m
+                           on e.id = m.exam_id
+        where e.id = #{id}
+        order by m.sort_num
+    </select>
+
+
+    <insert id="addExam" parameterType="Exam" useGeneratedKeys="true" keyProperty="id">
+        insert into exam
+            (title,create_time)
+        values(#{title},curdate())
+    </insert>
+    <insert id="addExamMaterial">
+        insert into exam_material
+        (exam_id,material_id,type,sort_num)
+        values
+        <foreach item="item" index="index" collection="examMaterialList" separator=",">
+            (#{item.examId},#{item.materialId},#{item.type},#{item.sortNum})
+        </foreach>
+    </insert>
+</mapper>
