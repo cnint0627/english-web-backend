@@ -15,6 +15,8 @@ public class QuestionRecord {
     private String answer;
     // 是否回答正确
     private int isCorrect;
+    // 题号
+    private int sortNum;
     // 创建时间
     private String createTime;
 }

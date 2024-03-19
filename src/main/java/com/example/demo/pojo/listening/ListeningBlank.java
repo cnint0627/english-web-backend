@@ -13,4 +13,6 @@ public class ListeningBlank {
     private String answer;
     // 该条内容是否有填空选项
     private int hasBlank;
+    // 题号
+    private int sortNum;
 }

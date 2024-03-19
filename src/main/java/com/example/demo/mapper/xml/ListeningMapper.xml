@@ -12,15 +12,28 @@
             property: 集合名称
             ofType: 当前集合中的数据类型
         -->
-        <collection property="blanks" ofType="ListeningBlank">
+        <collection property="questions" ofType="ListeningQuestion">
             <id property="id" column="qid"></id>
-            <result property="listeningId" column="listening_id"></result>
+            <result property="listeningId" column="qlistening_id"></result>
+            <result property="title" column="qtitle"></result>
+            <result property="answer" column="qanswer"></result>
+            <result property="sortNum" column="qsort_num"></result>
+            <collection property="options" ofType="ListeningQuestionOption">
+                <id property="id" column="oid"></id>
+                <result property="questionId" column="question_id"></result>
+                <result property="content" column="ocontent"></result>
+            </collection>
+        </collection>
+        <collection property="blanks" ofType="ListeningBlank">
+            <id property="id" column="bid"></id>
+            <result property="listeningId" column="blistening_id"></result>
             <result property="content" column="content"></result>
-            <result property="answer" column="answer"></result>
+            <result property="answer" column="banswer"></result>
+            <result property="sortNum" column="sort_num"></result>
         </collection>
         <collection property="records" ofType="QuestionRecord">
             <id property="id" column="rid"></id>
-            <result property="textId" column="rreading_id"></result>
+            <result property="textId" column="rlistening_id"></result>
             <result property="uid" column="uid"></result>
             <result property="record" column="record"></result>
             <result property="answer" column="ranswer"></result>
@@ -29,31 +42,25 @@
         </collection>
     </resultMap>
 
-    <select id="getById" resultMap="listeningMap">
-        select l.id,
-               l.title,
-               l.audio_path,
-               l.create_time,
-               q.id as qid,
-               q.content as content,
---                q.answer,
-               q.listening_id
-        from listening l
-                 left join listening_question q
-                           on l.id = q.listening_id
-        where l.id = #{id}
-        order by qid
-    </select>
 
     <select id="getAllById" resultMap="listeningMap">
         select l.id,
                l.title,
                l.audio_path,
                l.create_time,
+               b.id as bid,
+               b.content as content,
+               b.answer as banswer,
+               b.listening_id as blistening_id,
+               b.sort_num,
                q.id as qid,
-               q.content as content,
-               q.answer,
-               q.listening_id,
+               q.listening_id as qlistening_id,
+               q.title as qtitle,
+--                q.answer as qanswer,
+               q.sort_num as qsort_num,
+               o.id as oid,
+               o.content as ocontent,
+               o.question_id as question_id,
                u.id as rid,
                u.listening_id as rlistening_id,
                u.record,
@@ -61,21 +68,33 @@
                u.is_correct,
                u.create_time as rcreate_time
         from listening l
-                 left join listening_question q
-                           on l.id = q.listening_id
+                 left join listening_blank b
+                           on l.id = b.listening_id
+                left join listening_question q
+                            on l.id = q.listening_id
+                left join listening_question_option o
+                            on q.id = o.question_id
                  left join user_listening_record u
                            on l.id = u.listening_id and u.uid = #{uid}
         where l.id = #{id}
-        order by qid,rid
+        order by bid,rid,oid
     </select>
 
     <select id="getAnswerById">
-        select q.answer
-        from listening l
-             left join listening_question q
-                       on l.id = q.listening_id
-        where l.id = #{id}
-        order by q.id
+        select answer
+        from (select b.answer, b.sort_num
+              from listening l
+                       left join listening_blank b
+                                 on l.id = b.listening_id
+              where l.id = #{id}
+              union
+              select q.answer, q.sort_num
+              from listening l
+                       left join listening_question q
+                                 on l.id = q.listening_id
+              where l.id = #{id})
+        as s
+        order by sort_num
     </select>
 
     <insert id="submitAnswer">
@@ -93,11 +112,28 @@
         values(#{title},#{audioPath},curdate())
     </insert>
     <insert id="addListeningBlank">
-        insert into listening_question
-        (listening_id,content,answer)
+        insert into listening_blank
+        (listening_id,content,answer,sort_num)
         values
         <foreach item="item" index="index" collection="listeningBlankList" separator=",">
-            (#{item.listeningId},#{item.content},#{item.answer})
+            (#{item.listeningId},#{item.content},#{item.answer},#{item.sortNum})
+        </foreach>
+    </insert>
+
+    <insert id="addListeningQuestion" useGeneratedKeys="true" keyProperty="id">
+        insert into listening_question
+        (listening_id,title,answer,sort_num)
+        values
+        <foreach item="item" index="index" collection="listeningQuestionList" separator=",">
+            (#{item.listeningId},#{item.title},#{item.answer},#{item.sortNum})
+        </foreach>
+    </insert>
+    <insert id="addListeningQuestionOption">
+        insert into listening_question_option
+        (question_id,content)
+        values
+        <foreach item="item" index="index" collection="listeningQuestionOptionList" separator=",">
+            (#{item.questionId},#{item.content})
         </foreach>
     </insert>
 
@@ -110,7 +146,7 @@
     <delete id="delete">
         delete l,q
         from listening l
-        left join listening_question q on l.id = q.listening_id
+        left join listening_blank q on l.id = q.listening_id
         where l.id = #{id}
     </delete>
 </mapper>

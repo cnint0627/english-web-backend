@@ -4,12 +4,17 @@ import com.example.demo.mapper.ListeningMapper;
 import com.example.demo.pojo.*;
 import com.example.demo.pojo.listening.Listening;
 import com.example.demo.pojo.listening.ListeningBlank;
+import com.example.demo.pojo.listening.ListeningQuestion;
+import com.example.demo.pojo.listening.ListeningQuestionOption;
+import com.example.demo.pojo.reading.ReadingQuestion;
+import com.example.demo.pojo.reading.ReadingQuestionOption;
 import com.example.demo.service.ListeningService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +71,9 @@ public class ListeningServiceImpl implements ListeningService {
     @Override
     public List<String> getAnswerById(Long id){
         List<String> answerList=listeningMapper.getAnswerById(id);
-        if(answerList.getLast()==null){
-            answerList.removeLast();
+        if(answerList.getFirst()==null){
+            //  若答案列表的第一个元素是填空题的非题目
+            answerList.removeFirst();
         }
         return answerList;
     }
@@ -81,10 +87,30 @@ public class ListeningServiceImpl implements ListeningService {
     public void add(Listening listening){
         listeningMapper.addListening(listening);
         List<ListeningBlank> listeningBlankList=listening.getBlanks();
-        for(ListeningBlank listeningBlank: listeningBlankList){
-            listeningBlank.setListeningId(listening.getId());
+        if(!listeningBlankList.isEmpty()) {
+            // 听力材料的填空部分
+            for (ListeningBlank listeningBlank : listeningBlankList) {
+                listeningBlank.setListeningId(listening.getId());
+            }
+            listeningMapper.addListeningBlank(listeningBlankList);
         }
-        listeningMapper.addListeningBlank(listeningBlankList);
+
+        List<ListeningQuestion> listeningQuestionList=listening.getQuestions();
+        if(!listeningQuestionList.isEmpty()) {
+            // 听力材料的选择题部分
+            for (ListeningQuestion listeningQuestion : listeningQuestionList) {
+                listeningQuestion.setListeningId(listening.getId());
+            }
+            listeningMapper.addListeningQuestion(listeningQuestionList);
+            List<ListeningQuestionOption> listeningQuestionOptionList = new ArrayList<>();
+            for (ListeningQuestion listeningQuestion : listeningQuestionList) {
+                for (ListeningQuestionOption listeningQuestionOption : listeningQuestion.getOptions()) {
+                    listeningQuestionOption.setQuestionId(listeningQuestion.getId());
+                    listeningQuestionOptionList.add(listeningQuestionOption);
+                }
+            }
+            listeningMapper.addListeningQuestionOption(listeningQuestionOptionList);
+        }
     }
 
     @Override

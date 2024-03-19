@@ -87,6 +87,7 @@ public class ListeningController {
         // 获取用户ID
         Long uid=userService.getByToken(request).getId();
         List<String> answerList=listeningService.getAnswerById(id);
+        System.out.print(answerList.getLast());
         if(answerList.isEmpty()){
             return Result.error("听力id不存在");
         }
@@ -101,6 +102,7 @@ public class ListeningController {
             questionRecord.setUid(uid);
             questionRecord.setAnswer(answerList.get(index));
             questionRecord.setRecord(records.get(index));
+            questionRecord.setSortNum(index);
             // 比较答案的时候要把末尾的\n去掉
             questionRecord.setIsCorrect(questionRecord.getAnswer().trim().equals(questionRecord.getRecord())?1:0);
             questionRecordList.add(questionRecord);

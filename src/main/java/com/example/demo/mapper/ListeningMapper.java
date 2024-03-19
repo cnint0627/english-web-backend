@@ -3,6 +3,10 @@ package com.example.demo.mapper;
 import com.example.demo.pojo.listening.Listening;
 import com.example.demo.pojo.listening.ListeningBlank;
 import com.example.demo.pojo.QuestionRecord;
+import com.example.demo.pojo.listening.ListeningQuestion;
+import com.example.demo.pojo.listening.ListeningQuestionOption;
+import com.example.demo.pojo.reading.ReadingQuestion;
+import com.example.demo.pojo.reading.ReadingQuestionOption;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
@@ -31,6 +35,10 @@ public interface ListeningMapper {
     public void addListening(Listening listening);
 
     public void addListeningBlank(List<ListeningBlank> listeningBlankList);
+
+    public void addListeningQuestion(List<ListeningQuestion> listeningQuestionList);
+
+    public void addListeningQuestionOption(List<ListeningQuestionOption> listeningQuestionOptionList);
 
     public void editListening(Listening listening);
 
