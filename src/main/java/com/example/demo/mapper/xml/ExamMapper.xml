@@ -5,6 +5,7 @@
         <id column="id" property="id"></id>
         <result column="title" property="title"></result>
         <result column="create_time" property="createTime"></result>
+        <result column="uid" property="isCompleted"></result>
 
         <!--配置集合信息
             property: 集合名称
@@ -27,10 +28,13 @@
                m.exam_id,
                m.material_id,
                m.type,
-               m.sort_num
+               m.sort_num,
+               u.uid
         from exam e
                  left join exam_material m
                            on e.id = m.exam_id
+                 left join user_exam_record u
+                           on e.id = u.exam_id and u.uid = #{uid}
         where e.id = #{id}
         order by m.sort_num
     </select>

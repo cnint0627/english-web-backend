@@ -6,8 +6,10 @@ import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.reading.Reading;
 import com.example.demo.pojo.reading.ReadingQuestion;
 import com.example.demo.pojo.reading.ReadingQuestionOption;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -28,7 +30,8 @@ public interface ExamMapper {
 
     public List<String> getAnswerById(Long id);
 
-    public void submitAnswer(List<QuestionRecord> questionRecordList);
+    @Insert("insert into user_exam_record(exam_id,uid,create_time) values(#{id},#{uid},curdate())")
+    public void submitAnswer(Long id,Long uid);
 
     public void addExam(Exam exam);
 

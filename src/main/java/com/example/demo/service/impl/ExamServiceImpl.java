@@ -43,12 +43,17 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Exam getById(Long id, Long uid){
-        return examMapper.getById(id,uid);
+        Exam exam=examMapper.getById(id,uid);
+        if(exam.getIsCompleted()>0){
+            // 如果从表中查到了该条提交记录
+            exam.setIsCompleted(1);
+        }
+        return exam;
     }
 
     @Override
-    public void submitAnswer(List<QuestionRecord> questionRecordList){
-        examMapper.submitAnswer(questionRecordList);
+    public void submitAnswer(Long id,Long uid){
+        examMapper.submitAnswer(id,uid);
     }
 
     @Override

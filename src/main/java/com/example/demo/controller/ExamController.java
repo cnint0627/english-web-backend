@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.pojo.Exam.Exam;
+import com.example.demo.pojo.QuestionRecord;
 import com.example.demo.pojo.Result;
 import com.example.demo.pojo.reading.Reading;
 import com.example.demo.service.ExamService;
@@ -9,6 +10,9 @@ import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/exam")
 @RestController
@@ -51,6 +55,19 @@ public class ExamController {
             return Result.success(exam);
         }
         return Result.error("组卷id不存在");
+    }
+
+    /**
+     * 提交组卷，在表中做记录表示该组卷已提交
+     * @param id 组卷id
+     * @return 提交结果
+     */
+    @PostMapping("/submitAnswer")
+    public Result submitAnswer(@RequestParam Long id, HttpServletRequest request){
+        // 获取用户ID
+        Long uid=userService.getByToken(request).getId();
+        examService.submitAnswer(id,uid);
+        return Result.success();
     }
 
     /**

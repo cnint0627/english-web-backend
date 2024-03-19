@@ -11,6 +11,8 @@ public class Exam {
     private String title;
     // 创建时间
     private String createTime;
+    // 是否完成
+    private int isCompleted;
     // 组卷下的材料列表
     private List<ExamMaterial> materials;
 
